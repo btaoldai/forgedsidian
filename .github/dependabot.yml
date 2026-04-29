@@ -1,0 +1,39 @@
+version: 2
+updates:
+
+  # Cargo dependencies (workspace root)
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Paris"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "type:deps"
+      - "status:needs-triage"
+    groups:
+      tauri:
+        patterns:
+          - "tauri*"
+      leptos:
+        patterns:
+          - "leptos*"
+      tantivy:
+        patterns:
+          - "tantivy*"
+
+  # GitHub Actions versions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "type:ci"
+      - "status:needs-triage"

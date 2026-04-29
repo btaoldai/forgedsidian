@@ -1,0 +1,33 @@
+# CODEOWNERS for Forgedsidian
+# Format: <pattern> <owner>
+# Reference: https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+*                               @btaoldai
+
+# Per-crate ownership (currently the same person, ready for future co-maintainers)
+/forge-core/                    @btaoldai
+/forge-vault/                   @btaoldai
+/forge-editor/                  @btaoldai
+/forge-graph/                   @btaoldai
+/forge-canvas/                  @btaoldai
+/forge-renderer/                @btaoldai
+/forge-ui/                      @btaoldai
+/src-tauri/                     @btaoldai
+
+# Documentation
+/docs/                          @btaoldai
+/README.md                      @btaoldai
+/ARCHITECTURE.md                @btaoldai
+/AI-CONTRIBUTORS.md             @btaoldai
+/CONTRIBUTING.md                @btaoldai
+/CODE_OF_CONDUCT.md             @btaoldai
+/SECURITY.md                    @btaoldai
+
+# CI / build / packaging
+/.github/                       @btaoldai
+/scripts/                       @btaoldai
+/Cargo.toml                     @btaoldai
+/Cargo.lock                     @btaoldai
+/deny.toml                      @btaoldai
+/rust-toolchain.toml            @btaoldai

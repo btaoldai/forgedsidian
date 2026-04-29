@@ -1,0 +1,14 @@
+[build]
+# The WASM crate to build
+target = "index.html"
+
+# Output directory for built assets
+dist = "dist"
+
+[serve]
+# Port for trunk serve during development
+port = 1420
+
+[watch]
+# Paths to watch for changes (forge-ui/ is the Leptos WASM crate, formerly src/)
+watch = ["forge-ui", "index.html"]

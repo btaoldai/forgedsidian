@@ -1,0 +1,8 @@
+[toolchain]
+# Pinned to 1.88 -- multiple transitive dependencies (darling 0.23,
+# serde_with 3.18, time 0.3.47, icu_*) require >= 1.86 / 1.88.
+# Upgrade higher if newer transitive deps require it.
+channel = "1.88"
+components = ["rustfmt", "clippy"]
+targets = ["wasm32-unknown-unknown"]
+profile = "minimal"

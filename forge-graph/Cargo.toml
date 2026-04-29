@@ -1,0 +1,23 @@
+[package]
+name        = "forge-graph"
+description = "Backlink graph, node layout algorithms and graph queries for Forgedsidian."
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+repository.workspace = true
+
+[dependencies]
+forge-core  = { path = "../forge-core" }
+thiserror.workspace  = true
+serde.workspace      = true
+serde_json.workspace = true
+petgraph.workspace   = true
+uuid.workspace       = true
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "graph_bench"
+harness = false

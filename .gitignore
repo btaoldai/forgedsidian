@@ -1,0 +1,141 @@
+# =============================================================================
+# Forgedsidian .gitignore
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Rust / Cargo
+# ---------------------------------------------------------------------------
+# Match `target/` at any depth (root + nested crates like forge-ui/target/).
+target/
+**/target/
+**/*.rs.bk
+# Note : Cargo.lock IS committed (Forgedsidian is a binary application,
+# not a library published to crates.io -- reproducible builds matter).
+
+# Coverage / profiling
+*.profraw
+*.gcda
+*.gcno
+tarpaulin-report.html
+cobertura.xml
+
+# Generated docs
+**/target/doc/
+
+# ---------------------------------------------------------------------------
+# Tauri 2
+# ---------------------------------------------------------------------------
+src-tauri/target/
+src-tauri/gen/
+src-tauri/WixTools/
+src-tauri/icons/icon.ico.bak
+
+# ---------------------------------------------------------------------------
+# WASM / Trunk
+# ---------------------------------------------------------------------------
+dist/
+**/dist/
+*.wasm
+*.wasm.map
+.trunk/
+**/.trunk/
+
+# ---------------------------------------------------------------------------
+# IDE / Editor
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.#*
+
+# ---------------------------------------------------------------------------
+# OS metadata
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+desktop.ini
+ehthumbs.db
+
+# ---------------------------------------------------------------------------
+# Environment / Secrets (defense in depth -- nothing should land here)
+# ---------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# ---------------------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------------------
+*.log
+npm-debug.log*
+
+# ---------------------------------------------------------------------------
+# Node (if any Tauri plugins use npm)
+# ---------------------------------------------------------------------------
+node_modules/
+package-lock.json
+
+# ---------------------------------------------------------------------------
+# Backups -- never committed
+# ---------------------------------------------------------------------------
+*.bak
+*.backup
+*.old
+*.orig
+
+# ---------------------------------------------------------------------------
+# Forgedsidian-specific
+# ---------------------------------------------------------------------------
+# User vault data (never commit test vaults)
+test-vault/
+vault-test/
+*.forgeignore
+
+# Runtime-generated index
+.forge-index/
+
+# App-local state (canvas drawings layer, etc.)
+.forgedsidian/
+
+# ---------------------------------------------------------------------------
+# Branding pipeline
+# ---------------------------------------------------------------------------
+# Generated derivatives (output of scripts/prepare_icons.py)
+branding/exports/
+# Optional : ignore moodboards if they grow large.
+# Comment the next line if you want to version them.
+branding/mood/
+
+# ---------------------------------------------------------------------------
+# Documentation builds (mdBook future)
+# ---------------------------------------------------------------------------
+book/
+mdbook-build/
+
+# ---------------------------------------------------------------------------
+# AI-assisted dev artifacts (never commit)
+# ---------------------------------------------------------------------------
+# Internal Claude logs / orchestrator artifacts
+.claude/
+# Per-project CLAUDE.md / agent instructions live in the maintainer's vault,
+# not in the public repo. Never commit. (See AI-CONTRIBUTORS.md for the public
+# description of the workflow.)
+CLAUDE.md
+**/CLAUDE.md
+
+# ---------------------------------------------------------------------------
+# Misc local-only
+# ---------------------------------------------------------------------------
+*.local
+.cache/

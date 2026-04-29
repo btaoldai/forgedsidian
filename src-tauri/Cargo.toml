@@ -1,0 +1,48 @@
+[package]
+name    = "forge-app"
+# Tauri requires the binary to be named differently from the workspace root.
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+repository.workspace = true
+
+[[bin]]
+name = "forge-app"
+path = "src/main.rs"
+
+[lib]
+name          = "forge_app_lib"
+crate-type    = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { workspace = true, features = [] }
+
+[dependencies]
+# Workspace crates
+forge-core   = { path = "../forge-core" }
+forge-vault  = { path = "../forge-vault" }
+forge-editor = { path = "../forge-editor" }
+forge-graph  = { path = "../forge-graph" }
+forge-canvas = { path = "../forge-canvas" }
+
+# Tauri 2
+tauri = { workspace = true, features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-window-state = "2"
+
+# Async runtime
+tokio    = { workspace = true, features = ["full"] }
+
+# Error handling
+thiserror.workspace = true
+anyhow.workspace    = true
+
+# Serialization (for IPC payloads)
+serde.workspace      = true
+serde_json.workspace = true
+
+# Logging
+tracing.workspace            = true
+tracing-subscriber.workspace = true

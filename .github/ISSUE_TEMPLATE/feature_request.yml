@@ -1,0 +1,72 @@
+name: Feature request
+description: Propose a new capability or enhancement.
+title: "[feat] "
+labels: ["type:feature", "status:needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing your idea. For broader, exploratory ideas, consider opening a Discussion first to align on direction before investing in a PR.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What is the underlying user need? Avoid jumping straight to a solution.
+      placeholder: When I do X, I cannot Y because Z.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed solution
+      description: A description of how you would solve the problem. UI sketches welcome (drag-drop into the textarea).
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you thought about and why you preferred the proposed one.
+
+  - type: dropdown
+    id: use-case
+    attributes:
+      label: Primary use case
+      options:
+        - Daily-driver (notes, daily writing)
+        - Power user (large vault, automation)
+        - Research (knowledge mapping, citation, annotation)
+        - Education / academic
+        - Other (describe in problem section)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Estimated scope
+      options:
+        - Small (a few hundred lines, single crate)
+        - Medium (a feature touching 2-3 crates)
+        - Large (architectural change, ADR likely needed)
+        - I don't know
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I would be willing to contribute a PR for this
+        - label: I would help with documentation / testing
+        - label: I am only proposing, not committing time
+
+  - type: checkboxes
+    id: pre-checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing issues and discussions to avoid duplicates.
+          required: true

@@ -1,0 +1,16 @@
+[package]
+name        = "forge-editor"
+description = "Markdown AST, inline editing logic and YAML frontmatter parsing for Forgedsidian."
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+repository.workspace = true
+
+[dependencies]
+forge-core       = { path = "../forge-core" }
+thiserror.workspace      = true
+serde.workspace          = true
+serde_json.workspace     = true
+serde_yaml       = "0.9"
+pulldown-cmark.workspace = true

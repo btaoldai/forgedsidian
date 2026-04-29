@@ -1,0 +1,39 @@
+name: Question
+description: Ask a question about the project. Please prefer Discussions for open-ended questions.
+title: "[question] "
+labels: ["type:question", "status:needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For open-ended questions, **please use [Discussions](https://github.com/btaoldai/forgedsidian/discussions)** -- they are a better fit and stay searchable for other users with the same question.
+
+        Use this issue type only when the question is actionable (something the maintainer should do or document, e.g. "the README does not explain how X works -- could you clarify?").
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      placeholder: What would you like to know?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (what you tried, what you read)
+      description: Helps the maintainer answer once and update the docs if needed.
+
+  - type: input
+    id: doc-pointer
+    attributes:
+      label: Documentation pointer
+      placeholder: "Section of README / ARCHITECTURE / docs/ that you read but did not answer your question, if any."
+
+  - type: checkboxes
+    id: pre-checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I checked Discussions and existing issues first.
+          required: true

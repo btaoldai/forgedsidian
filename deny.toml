@@ -1,0 +1,117 @@
+# ============================================================================
+# Forgedsidian - cargo-deny configuration
+# Ref: https://embarkstudios.github.io/cargo-deny/
+# ============================================================================
+
+[graph]
+# The workspace has 2 targets : native (src-tauri) and wasm32 (forge-ui via Trunk)
+targets = [
+    { triple = "x86_64-unknown-linux-gnu" },
+    { triple = "x86_64-pc-windows-msvc" },
+    { triple = "aarch64-apple-darwin" },
+    { triple = "wasm32-unknown-unknown" },
+]
+# forge-ui is excluded from the Cargo workspace but built by Trunk
+all-features = false
+
+# ---------------------------------------------------------------------------
+# LICENSES
+# ---------------------------------------------------------------------------
+[licenses]
+allow = [
+    "MIT",
+    "MIT-0",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unlicense",
+    "CC0-1.0",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "Zlib",
+    "OpenSSL",
+    "BSL-1.0",
+]
+# In cargo-deny 0.19+, deny/copyleft/allow-osi-fsf-free are removed.
+# Only allow-listed licenses pass; everything else is rejected.
+confidence-threshold = 0.8
+
+# Documented exceptions (if needed)
+# [[licenses.exceptions]]
+# allow = ["LGPL-2.1-only"]
+# name  = "some-crate"
+
+# Manual clarifications for crates without an SPDX license in Cargo.toml
+# [[licenses.clarify]]
+# name = "ring"
+# expression = "MIT AND ISC AND OpenSSL"
+# license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
+
+# ---------------------------------------------------------------------------
+# ADVISORIES (RUSTSEC)
+# ---------------------------------------------------------------------------
+[advisories]
+version = 2
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+
+# RUSTSEC advisories explicitly ignored.
+# All entries below are *unmaintained* / *unsound* warnings in transitive
+# dependencies imposed by Tauri 2, tantivy, or wgpu. They have no upstream
+# fix available as of the audit date (see docs/audits/LICENCE-AUDIT-REPORT.md).
+# Each entry includes a comment explaining why it is accepted.
+# Re-evaluate every quarter or when bumping major dependencies.
+ignore = [
+    # --- Tauri 2 -> wry/tao -> GTK3 bindings (Linux only, no replacement until Tauri 3) ---
+    "RUSTSEC-2024-0411", # gdkwayland-sys unmaintained (GTK3)
+    "RUSTSEC-2024-0412", # gdk unmaintained (GTK3)
+    "RUSTSEC-2024-0413", # atk unmaintained (GTK3)
+    "RUSTSEC-2024-0414", # gdkx11-sys unmaintained (GTK3)
+    "RUSTSEC-2024-0415", # gtk unmaintained (GTK3)
+    "RUSTSEC-2024-0416", # atk-sys unmaintained (GTK3)
+    "RUSTSEC-2024-0417", # gdkx11 unmaintained (GTK3)
+    "RUSTSEC-2024-0418", # gdk-sys unmaintained (GTK3)
+    "RUSTSEC-2024-0419", # gtk3-macros unmaintained (GTK3)
+    "RUSTSEC-2024-0420", # gtk-sys unmaintained (GTK3)
+    "RUSTSEC-2024-0429", # glib VariantStrIter unsound (GTK3)
+    "RUSTSEC-2024-0370", # proc-macro-error unmaintained (gtk3-macros, glib-macros)
+    # --- Tauri 2 -> tauri-utils -> kuchikiki/urlpattern (HTML parsing for tauri.conf) ---
+    "RUSTSEC-2025-0057", # fxhash unmaintained (selectors)
+    "RUSTSEC-2025-0075", # unic-char-range unmaintained
+    "RUSTSEC-2025-0080", # unic-common unmaintained
+    "RUSTSEC-2025-0081", # unic-char-property unmaintained
+    "RUSTSEC-2025-0098", # unic-ucd-version unmaintained
+    "RUSTSEC-2025-0100", # unic-ucd-ident unmaintained
+    # --- notify v7 -> notify-types -> instant ---
+    "RUSTSEC-2024-0384", # instant unmaintained (file watcher dep)
+    # --- wgpu -> wgpu-hal -> metal -> paste ---
+    "RUSTSEC-2024-0436", # paste unmaintained (wgpu metal backend)
+    # --- tantivy -> lru / rand_distr ---
+    "RUSTSEC-2026-0002", # lru IterMut unsound (tantivy cache)
+    "RUSTSEC-2026-0097", # rand 0.7/0.8 custom logger unsound (tantivy + codegen)
+]
+
+# ---------------------------------------------------------------------------
+# BANS (banned crates / duplicates)
+# ---------------------------------------------------------------------------
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+highlight = "all"
+
+# Explicitly banned crates
+# deny = [
+#     { name = "openssl-sys", wrappers = [] },
+# ]
+
+# ---------------------------------------------------------------------------
+# SOURCES (provenance)
+# ---------------------------------------------------------------------------
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

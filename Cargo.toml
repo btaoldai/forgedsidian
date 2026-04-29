@@ -1,0 +1,82 @@
+[workspace]
+members = [
+    "forge-core",
+    "forge-vault",
+    "forge-editor",
+    "forge-graph",
+    "forge-canvas",
+    "forge-renderer",
+    "src-tauri",
+    # "forge-ui" is excluded from the native workspace: it targets wasm32-unknown-unknown
+    # and is built separately via Trunk (cargo tauri dev runs trunk serve automatically).
+    # To build the frontend manually: trunk build (from forge-pkm/ root)
+]
+resolver = "2"
+exclude  = ["forge-ui"]
+
+[workspace.package]
+version     = "0.1.0"
+edition     = "2021"
+authors     = ["Baptiste Ochlafen <56604230+btaoldai@users.noreply.github.com>"]
+license     = "MIT"
+repository  = "https://github.com/btaoldai/forgedsidian"
+rust-version = "1.88"
+
+# ---------------------------------------------------------------------------
+# Shared dependencies (version pinned once, inherited by all crates via
+# `[dependencies] foo.workspace = true`)
+# ---------------------------------------------------------------------------
+[workspace.dependencies]
+# Error handling
+thiserror   = "2"
+anyhow      = "1"
+
+# Serialization
+serde       = { version = "1", features = ["derive"] }
+serde_json  = "1"
+
+# Async runtime
+tokio       = { version = "1", features = ["full"] }
+
+# Logging / tracing
+tracing     = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Tauri 2
+tauri       = { version = "2", features = [] }
+tauri-build = { version = "2", features = [] }
+
+# Leptos 0.7 (CSR — compiled to WASM for the Tauri WebView)
+leptos      = { version = "0.7", features = ["csr"] }
+
+# Full-text search (forge-vault)
+tantivy     = "0.22"
+
+# File-system watcher (forge-vault)
+notify      = "7"
+
+# Markdown parsing (forge-editor)
+pulldown-cmark = "0.12"
+
+# Graph layout (forge-graph)
+# petgraph is the de-facto graph data structure crate in Rust
+petgraph    = "0.6"
+
+# Unique IDs
+# Note: `js` feature is needed for WASM targets (ignored on native)
+uuid        = { version = "1", features = ["v4", "serde", "js"] }
+
+# Time
+chrono      = { version = "0.4", features = ["serde"] }
+
+# Cryptographic integrity (forge-vault manifest signing)
+hmac        = "0.12"
+sha2        = "0.10"
+rand        = { version = "0.8", features = ["std"] }
+hex-literal = "0.4"
+hex         = "0.4"
+
+# GPU rendering (forge-renderer)
+wgpu        = "24"
+bytemuck    = { version = "1", features = ["derive"] }
+glam        = "0.29"

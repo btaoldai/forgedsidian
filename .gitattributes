@@ -1,0 +1,40 @@
+# Auto-detect text files and ensure LF line endings on checkout.
+* text=auto eol=lf
+
+# Force LF for source files
+*.rs    text eol=lf
+*.toml  text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.py    text eol=lf
+
+# Force CRLF for Windows-only files
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary files
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.icns  binary
+*.wasm  binary
+*.pdf   binary
+*.zip   binary
+
+# Linguist hints (helps GitHub language bar accuracy)
+*.rs    linguist-language=Rust
+*.html  linguist-language=HTML
+*.css   linguist-language=CSS
+
+# Generated / vendored content (excluded from language stats)
+docs/audits/SBOM-*.spdx.json   linguist-generated=true
+Cargo.lock                      linguist-generated=true
+forge-ui/dist/                  linguist-generated=true

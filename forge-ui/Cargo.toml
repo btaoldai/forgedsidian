@@ -1,0 +1,80 @@
+[package]
+name        = "forge-ui"
+description = "Leptos CSR frontend — compiles to WASM and runs inside the Tauri WebView."
+version     = "0.1.0"
+edition     = "2021"
+authors     = ["Baptiste Ochlafen <56604230+btaoldai@users.noreply.github.com>"]
+license     = "MIT"
+repository  = "https://github.com/btaoldai/forgedsidian"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Workspace crates (WASM-safe: no tokio, no OS deps)
+forge-core     = { path = "../forge-core" }
+forge-canvas   = { path = "../forge-canvas" }
+forge-renderer = { path = "../forge-renderer" }
+
+# Leptos 0.7 CSR — the feature "csr" activates client-side rendering to WASM
+leptos = { version = "0.7", features = ["csr"] }
+
+# WASM entry point, panic handler, and async bridge
+wasm-bindgen             = "0.2"
+wasm-bindgen-futures     = "0.4"
+console_error_panic_hook = "0.1"
+
+# Serialization (IPC payloads mirroring forge-core types)
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# uuid needs the `js` feature on wasm32 for randomness via crypto.getRandomValues
+uuid = { version = "1", features = ["v4", "serde", "js"] }
+
+# IPC bridge — Tauri 2 typed wrappers
+serde-wasm-bindgen = "0.6"
+js-sys             = "0.3"
+
+# Web APIs for WASM (setTimeout, drag-and-drop, DOM manipulation)
+web-sys = { version = "0.3", features = [
+    "Window",
+    "Document",
+    "HtmlElement",
+    "DragEvent",
+    "DataTransfer",
+    "MouseEvent",
+    "WheelEvent",
+    "KeyboardEvent",
+    "TouchEvent",
+    "TouchList",
+    "Touch",
+    "Performance",
+    "Node",
+    "EventTarget",
+    "DomTokenList",
+    "Element",
+    "HtmlInputElement",
+    "HtmlSelectElement",
+    "HtmlTextAreaElement",
+    "CssStyleDeclaration",
+    "DomRect",
+    "SvgElement",
+    "SvgsvgElement",
+    "HtmlCanvasElement",
+    "PointerEvent",
+    "ResizeObserver",
+    "ResizeObserverEntry",
+    "ResizeObserverSize",
+    "DomRectReadOnly",
+    "Storage",
+    "console",
+] }
+
+# Markdown to HTML rendering (pure Rust, WASM-safe)
+pulldown-cmark = "0.12"
+
+# HTML sanitization — prevents XSS from user-authored markdown
+ammonia = "4"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"

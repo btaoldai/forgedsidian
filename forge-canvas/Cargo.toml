@@ -1,0 +1,16 @@
+[package]
+name        = "forge-canvas"
+description = "Canvas rendering logic, hit-testing and ABCDE layout — shared between the Tauri backend and the Leptos WASM frontend."
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+repository.workspace = true
+
+# No tokio dep: this crate must compile to both native AND WASM targets.
+[dependencies]
+forge-core  = { path = "../forge-core" }
+thiserror.workspace  = true
+serde.workspace      = true
+serde_json.workspace = true
+uuid.workspace       = true
