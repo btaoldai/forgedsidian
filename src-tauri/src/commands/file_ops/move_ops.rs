@@ -72,11 +72,9 @@ pub async fn move_file(
     }
 
     // Security: ensure source is within vault
-    let src_canonical = src_path
-        .canonicalize()
+    let src_canonical = dunce::canonicalize(&src_path)
         .map_err(|e| format!("failed to resolve source: {}", e))?;
-    let vault_canonical = vault_path
-        .canonicalize()
+    let vault_canonical = dunce::canonicalize(&vault_path)
         .map_err(|e| format!("failed to resolve vault: {}", e))?;
     if !src_canonical.starts_with(&vault_canonical) {
         return Err("source is outside vault".to_string());
@@ -111,8 +109,7 @@ pub async fn move_file(
     }
 
     // Security: ensure destination is within vault
-    let dest_dir_canonical = dest_dir
-        .canonicalize()
+    let dest_dir_canonical = dunce::canonicalize(&dest_dir)
         .map_err(|e| format!("failed to resolve destination: {}", e))?;
     if !dest_dir_canonical.starts_with(&vault_canonical) {
         return Err("destination is outside vault".to_string());
@@ -176,11 +173,9 @@ pub async fn move_folder(
     }
 
     // Security: ensure source is within vault and not the vault root
-    let src_canonical = src_path
-        .canonicalize()
+    let src_canonical = dunce::canonicalize(&src_path)
         .map_err(|e| format!("failed to resolve source: {}", e))?;
-    let vault_canonical = vault_path
-        .canonicalize()
+    let vault_canonical = dunce::canonicalize(&vault_path)
         .map_err(|e| format!("failed to resolve vault: {}", e))?;
     if !src_canonical.starts_with(&vault_canonical) || src_canonical == vault_canonical {
         return Err("cannot move vault root or paths outside vault".to_string());
@@ -194,7 +189,7 @@ pub async fn move_folder(
     };
 
     // Prevent moving a folder into itself
-    if let Ok(dest_canonical) = dest_parent.canonicalize() {
+    if let Ok(dest_canonical) = dunce::canonicalize(&dest_parent) {
         if dest_canonical.starts_with(&src_canonical) {
             return Err("cannot move a folder into itself".to_string());
         }
@@ -222,8 +217,7 @@ pub async fn move_folder(
     }
 
     // Security: ensure destination is within vault
-    let dest_parent_canonical = dest_parent
-        .canonicalize()
+    let dest_parent_canonical = dunce::canonicalize(&dest_parent)
         .map_err(|e| format!("failed to resolve destination: {}", e))?;
     if !dest_parent_canonical.starts_with(&vault_canonical) {
         return Err("destination is outside vault".to_string());

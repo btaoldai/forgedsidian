@@ -66,6 +66,13 @@ petgraph    = "0.6"
 # Note: `js` feature is needed for WASM targets (ignored on native)
 uuid        = { version = "1", features = ["v4", "serde", "js"] }
 
+# Cross-platform path canonicalization
+# Wraps std::fs::canonicalize and strips the Windows UNC `\\?\` prefix when not
+# strictly required, avoiding `starts_with()` mismatches and frontend serialisation
+# issues. Used by every layer that validates paths (forge-vault::validate_path_in_vault
+# and src-tauri::commands::file_ops).
+dunce       = "1"
+
 # Time
 chrono      = { version = "0.4", features = ["serde"] }
 

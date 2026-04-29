@@ -28,11 +28,9 @@ pub async fn read_file(path: String, state: State<'_, ForgeState>) -> Result<Str
     }
 
     // Security: ensure the resolved file path is within the vault root.
-    let canonical = file_path
-        .canonicalize()
+    let canonical = dunce::canonicalize(&file_path)
         .map_err(|_| "path validation failed".to_string())?;
-    let vault_canonical = vault_path
-        .canonicalize()
+    let vault_canonical = dunce::canonicalize(&vault_path)
         .map_err(|_| "vault path validation failed".to_string())?;
 
     if !canonical.starts_with(&vault_canonical) {
@@ -92,11 +90,9 @@ pub async fn save_note(
     let parent = file_path
         .parent()
         .ok_or_else(|| "path validation failed".to_string())?;
-    let parent_canonical = parent
-        .canonicalize()
+    let parent_canonical = dunce::canonicalize(&parent)
         .map_err(|_| "path validation failed".to_string())?;
-    let vault_canonical = vault_path
-        .canonicalize()
+    let vault_canonical = dunce::canonicalize(&vault_path)
         .map_err(|_| "vault path validation failed".to_string())?;
 
     if !parent_canonical.starts_with(&vault_canonical) {

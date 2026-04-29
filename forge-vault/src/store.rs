@@ -394,34 +394,36 @@ impl VaultStore {
         snap
     }
 
-    /// Validate that `path` canonicalises to a location within the vault root.
+    /// Validate `path` canonicalises within the vault root, return safe canonical path.
     ///
     /// Resolves any `..`, `.`, or symlink components in both `path` and the
-    /// vault root, then verifies that the resulting absolute path starts with
-    /// the canonical vault root. Returns [`VaultError::PathTraversal`] otherwise.
+    /// vault root using [`dunce::canonicalize`] (which strips the Windows UNC
+    /// `\\?\` prefix when not strictly required). Returns the canonical
+    /// [`PathBuf`] on success, or [`VaultError::PathTraversal`] otherwise.
     ///
-    /// Defense-in-depth check used by mutating per-path operations
-    /// (`reindex_file`, etc.) before any file-system access. It rejects:
+    /// **TOCTOU-safe usage**: callers MUST use the returned canonical path for
+    /// all subsequent file-system operations (read, write, metadata) instead
+    /// of the original `path` argument. Otherwise an attacker could swap a
+    /// symlink between validation and file access.
     ///
+    /// Rejects:
     /// - Relative-path traversals (`vault/../../../etc/passwd`).
     /// - Symlinks pointing outside the vault.
     /// - Non-existent paths (canonicalize fails -> rejected).
-    fn validate_path_in_vault(&self, path: &Path) -> Result<(), VaultError> {
-        let canonical_path = path.canonicalize().map_err(|_| VaultError::PathTraversal {
+    fn validate_path_in_vault(&self, path: &Path) -> Result<PathBuf, VaultError> {
+        let canonical_path = dunce::canonicalize(path).map_err(|_| VaultError::PathTraversal {
             path: path.display().to_string(),
             root: self.root.display().to_string(),
         })?;
-        let canonical_root = self
-            .root
-            .canonicalize()
-            .unwrap_or_else(|_| self.root.clone());
+        let canonical_root =
+            dunce::canonicalize(&self.root).unwrap_or_else(|_| self.root.clone());
         if !canonical_path.starts_with(&canonical_root) {
             return Err(VaultError::PathTraversal {
                 path: path.display().to_string(),
                 root: self.root.display().to_string(),
             });
         }
-        Ok(())
+        Ok(canonical_path)
     }
 
     /// Re-index a single note after it changed on disk using the default extractor.
@@ -455,12 +457,17 @@ impl VaultStore {
         extractor: &dyn WikilinkExtractor,
     ) -> Result<(), VaultError> {
         // Defense in depth: validate the path stays within the vault root
-        // BEFORE any file-system read. This rejects attacker-controlled
-        // relative paths from indexing arbitrary files (e.g. /etc/passwd).
-        self.validate_path_in_vault(path)?;
+        // BEFORE any file-system read. The canonical safe path is used ONLY
+        // for the actual FS reads (read_to_string + metadata) -- this is the
+        // attack surface for TOCTOU (a symlink swap between validate and
+        // read). For manifest/index/audit, we keep the original `path` to
+        // preserve key consistency (canonicalize on Windows can return a
+        // slightly different path -- e.g. case normalisation -- which would
+        // create duplicate manifest entries on every reindex).
+        let safe_path = self.validate_path_in_vault(path)?;
 
-        let body = std::fs::read_to_string(path)?;
-        let meta = std::fs::metadata(path)?;
+        let body = std::fs::read_to_string(&safe_path)?;
+        let meta = std::fs::metadata(&safe_path)?;
         let modified_at = meta
             .modified()
             .map(chrono::DateTime::<chrono::Utc>::from)
@@ -479,7 +486,7 @@ impl VaultStore {
             created_at: modified_at,
         };
 
-        // Update Tantivy index (upsert).
+        // Update Tantivy index (upsert keyed by note.path).
         self.index.index_single_note(&note)?;
 
         // Update tag index for this note.
@@ -488,7 +495,8 @@ impl VaultStore {
         // Extract and cache wikilinks.
         let wikilinks = extract_wikilink_targets(&note.body, extractor);
 
-        // Update manifest with cached wikilinks.
+        // Update manifest with cached wikilinks (key = original path for
+        // consistency with the initial scan_md_files indexation).
         self.manifest.upsert(
             path,
             NoteEntry::with_wikilinks(id, mtime, wikilinks.clone()),
