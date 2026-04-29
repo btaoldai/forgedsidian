@@ -66,8 +66,8 @@ Contributors don't need to use the orchestrator to contribute. But understanding
 
 ### In commits (public)
 
-- The maintainer (Baptiste) authors and validates every commit. The author and committer trailers always reflect the human.
-- When AI contribution to a specific commit is substantial (a refactor, a new feature, a non-trivial block of code), a **`Co-authored-by:` trailer** is added to the commit message:
+- The maintainer (Baptiste) authors and validates every commit. The author and committer fields always reflect the human, using a no-reply GitHub email (`56604230+btaoldai@users.noreply.github.com`) so that personal contact emails are never exposed in the git history.
+- For overall AI contribution transparency, **this `AI-CONTRIBUTORS.md` file is the canonical source of truth -- not per-commit trailers**. The maintainer **may** optionally add a `Co-authored-by:` trailer on individual commits when AI contribution to that specific commit is substantial enough to warrant explicit per-commit attribution (a refactor, a new feature, a non-trivial block of code). Example:
 
 ```
 feat(forge-vault): add HMAC-SHA256 manifest signing
@@ -81,7 +81,7 @@ Closes #XX
 Co-authored-by: Claude (Anthropic) <noreply@anthropic.com>
 ```
 
-This is the convention adopted by GitHub, Linux kernel, and many large open-source projects when there is a non-author contributor whose work is reflected in the diff. We extend it to AI-assisted contribution as a transparency mechanism.
+This trailer convention is adopted by GitHub, the Linux kernel, and many large open-source projects when there is a non-author contributor whose work is reflected in the diff. Forgedsidian keeps its use **optional per-commit** -- because the global picture is already documented here -- without excluding it.
 
 ### In ADRs
 
