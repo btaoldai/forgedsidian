@@ -28,4 +28,12 @@ pub enum VaultError {
     /// A core domain error propagated from `forge-core`.
     #[error("core error: {0}")]
     Core(#[from] forge_core::CoreError),
+
+    /// A path operation tried to escape the vault root.
+    ///
+    /// Triggered when an attacker-controlled relative path (containing `..`,
+    /// or a symlink target) canonicalizes outside the vault root directory.
+    /// The vault refuses to index, read, or write files outside its boundary.
+    #[error("path traversal rejected: {path} is outside vault root {root}")]
+    PathTraversal { path: String, root: String },
 }

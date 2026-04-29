@@ -12,6 +12,10 @@ use std::path::{Path, PathBuf};
 ///
 /// Hidden directories (names starting with `.`) are skipped — this excludes
 /// `.forge-index`, `.git`, `.obsidian`, etc.
+///
+/// Symlinks (file or directory) are also skipped: they could point outside
+/// the vault and bypass any starts_with(vault_root) check, which is
+/// unacceptable for a security-sensitive PKM application.
 pub fn scan_md_files(root: &Path) -> Result<Vec<PathBuf>, VaultError> {
     let mut out = Vec::new();
     scan_dir(root, &mut out)?;
@@ -21,15 +25,25 @@ pub fn scan_md_files(root: &Path) -> Result<Vec<PathBuf>, VaultError> {
 fn scan_dir(dir: &Path, out: &mut Vec<PathBuf>) -> Result<(), VaultError> {
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
+        let file_type = entry.file_type()?;
         let path = entry.path();
         let name = entry.file_name();
 
-        if path.is_dir() {
+        // Reject symlinks unconditionally. A symlink in a vault could point
+        // anywhere on the filesystem (e.g. /etc/passwd, secrets, sibling
+        // vaults) and bypass any starts_with(vault_root) check. PKM vaults
+        // are flat-folder hierarchies with no legitimate symlink use case.
+        if file_type.is_symlink() {
+            tracing::warn!(path = %path.display(), "scan: skipping symlink");
+            continue;
+        }
+
+        if file_type.is_dir() {
             // Skip hidden directories.
             if !name.to_string_lossy().starts_with('.') {
                 scan_dir(&path, out)?;
             }
-        } else if path.extension().is_some_and(|ext| ext == "md") {
+        } else if file_type.is_file() && path.extension().is_some_and(|ext| ext == "md") {
             out.push(path);
         }
     }

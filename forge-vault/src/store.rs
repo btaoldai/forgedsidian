@@ -394,6 +394,36 @@ impl VaultStore {
         snap
     }
 
+    /// Validate that `path` canonicalises to a location within the vault root.
+    ///
+    /// Resolves any `..`, `.`, or symlink components in both `path` and the
+    /// vault root, then verifies that the resulting absolute path starts with
+    /// the canonical vault root. Returns [`VaultError::PathTraversal`] otherwise.
+    ///
+    /// Defense-in-depth check used by mutating per-path operations
+    /// (`reindex_file`, etc.) before any file-system access. It rejects:
+    ///
+    /// - Relative-path traversals (`vault/../../../etc/passwd`).
+    /// - Symlinks pointing outside the vault.
+    /// - Non-existent paths (canonicalize fails -> rejected).
+    fn validate_path_in_vault(&self, path: &Path) -> Result<(), VaultError> {
+        let canonical_path = path.canonicalize().map_err(|_| VaultError::PathTraversal {
+            path: path.display().to_string(),
+            root: self.root.display().to_string(),
+        })?;
+        let canonical_root = self
+            .root
+            .canonicalize()
+            .unwrap_or_else(|_| self.root.clone());
+        if !canonical_path.starts_with(&canonical_root) {
+            return Err(VaultError::PathTraversal {
+                path: path.display().to_string(),
+                root: self.root.display().to_string(),
+            });
+        }
+        Ok(())
+    }
+
     /// Re-index a single note after it changed on disk using the default extractor.
     ///
     /// Convenience method that calls [`reindex_file_with_extractor`] with the
@@ -414,12 +444,21 @@ impl VaultStore {
     /// # Arguments
     /// * `path` - Absolute path to the note file.
     /// * `extractor` - The [`WikilinkExtractor`] to use for link extraction.
+    ///
+    /// # Errors
+    /// Returns [`VaultError::PathTraversal`] if `path` canonicalises to a
+    /// location outside the vault root.
     #[instrument(skip(self, extractor))]
     pub fn reindex_file_with_extractor(
         &mut self,
         path: &Path,
         extractor: &dyn WikilinkExtractor,
     ) -> Result<(), VaultError> {
+        // Defense in depth: validate the path stays within the vault root
+        // BEFORE any file-system read. This rejects attacker-controlled
+        // relative paths from indexing arbitrary files (e.g. /etc/passwd).
+        self.validate_path_in_vault(path)?;
+
         let body = std::fs::read_to_string(path)?;
         let meta = std::fs::metadata(path)?;
         let modified_at = meta
