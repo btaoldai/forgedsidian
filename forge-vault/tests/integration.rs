@@ -682,7 +682,7 @@ fn test_symlinks_rejected_unix() {
     // Create a temporary external directory (outside the vault).
     let external_tmp = TempDir::new().expect("failed to create external temp dir");
     create_note(
-        &external_tmp,
+        external_tmp.path(),
         "external_target",
         "This is outside the vault.",
     );
