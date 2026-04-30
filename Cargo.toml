@@ -53,7 +53,7 @@ leptos      = { version = "0.7", features = ["csr"] }
 tantivy     = "0.22"
 
 # File-system watcher (forge-vault)
-notify      = "7"
+notify      = "8"
 
 # Markdown parsing (forge-editor)
 pulldown-cmark = "0.13"
