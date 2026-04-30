@@ -56,7 +56,7 @@ tantivy     = "0.22"
 notify      = "8"
 
 # Markdown parsing (forge-editor)
-pulldown-cmark = "0.12"
+pulldown-cmark = "0.13"
 
 # Graph layout (forge-graph)
 # petgraph is the de-facto graph data structure crate in Rust
