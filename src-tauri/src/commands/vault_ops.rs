@@ -236,10 +236,10 @@ pub async fn get_note(path: String, state: State<'_, ForgeState>) -> Result<Stri
         guard.clone().ok_or("vault not open")?
     };
 
-    let canonical = dunce::canonicalize(&file_path)
-        .map_err(|_| "path validation failed".to_string())?;
-    let vault_canonical = dunce::canonicalize(&vault_path)
-        .map_err(|_| "vault path validation failed".to_string())?;
+    let canonical =
+        dunce::canonicalize(&file_path).map_err(|_| "path validation failed".to_string())?;
+    let vault_canonical =
+        dunce::canonicalize(&vault_path).map_err(|_| "vault path validation failed".to_string())?;
 
     if !canonical.starts_with(&vault_canonical) {
         return Err("path validation failed".to_string());
@@ -362,10 +362,10 @@ pub async fn open_in_default_app(
         guard.clone().ok_or("vault not open")?
     };
 
-    let canonical = dunce::canonicalize(&file_path)
-        .map_err(|_| "path validation failed".to_string())?;
-    let vault_canonical = dunce::canonicalize(&vault_path)
-        .map_err(|_| "vault path validation failed".to_string())?;
+    let canonical =
+        dunce::canonicalize(&file_path).map_err(|_| "path validation failed".to_string())?;
+    let vault_canonical =
+        dunce::canonicalize(&vault_path).map_err(|_| "vault path validation failed".to_string())?;
 
     if !canonical.starts_with(&vault_canonical) {
         return Err("path validation failed".to_string());

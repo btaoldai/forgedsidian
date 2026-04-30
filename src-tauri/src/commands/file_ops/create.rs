@@ -66,8 +66,8 @@ pub async fn create_note(
     // the vault. Defense-in-depth: blocks symlink-based escapes that
     // `reject_traversal` cannot detect (a folder argument that is itself a
     // symlink pointing outside the vault).
-    let canonical_parent = dunce::canonicalize(&parent)
-        .map_err(|e| format!("path canonicalization failed: {}", e))?;
+    let canonical_parent =
+        dunce::canonicalize(&parent).map_err(|e| format!("path canonicalization failed: {}", e))?;
     if !canonical_parent.starts_with(&canonical_vault) {
         return Err(format!(
             "path traversal rejected: {} is outside vault root",

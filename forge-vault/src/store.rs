@@ -415,8 +415,7 @@ impl VaultStore {
             path: path.display().to_string(),
             root: self.root.display().to_string(),
         })?;
-        let canonical_root =
-            dunce::canonicalize(&self.root).unwrap_or_else(|_| self.root.clone());
+        let canonical_root = dunce::canonicalize(&self.root).unwrap_or_else(|_| self.root.clone());
         if !canonical_path.starts_with(&canonical_root) {
             return Err(VaultError::PathTraversal {
                 path: path.display().to_string(),
