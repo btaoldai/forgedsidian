@@ -108,9 +108,8 @@ pub fn validate_vault_path(path_str: &str) -> Result<PathBuf, String> {
         }
     }
 
-    let canonical = path
-        .canonicalize()
-        .map_err(|e| format!("failed to canonicalize path: {}", e))?;
+    let canonical =
+        dunce::canonicalize(&path).map_err(|e| format!("failed to canonicalize path: {}", e))?;
 
     if !canonical.is_dir() {
         return Err(format!(

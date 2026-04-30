@@ -1298,6 +1298,7 @@ name = "forge-app"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dunce",
  "forge-canvas",
  "forge-core",
  "forge-editor",
@@ -1382,6 +1383,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "criterion",
+ "dunce",
  "forge-core",
  "forge-graph",
  "hex",

@@ -41,35 +41,61 @@ pub async fn create_note(
         guard.clone().ok_or("vault not open")?
     };
 
+    // Canonicalize the vault root (must exist, since vault is open).
+    // This is the "ground truth" for the path-traversal check below.
+    let canonical_vault = dunce::canonicalize(&vault_path)
+        .map_err(|e| format!("vault canonicalization failed: {}", e))?;
+
     let file_path = vault_path.join(&rel_path);
 
     if file_path.exists() {
         return Err(format!("note already exists: {}", rel_path));
     }
 
-    if let Some(parent) = file_path.parent() {
-        tokio::fs::create_dir_all(parent)
-            .await
-            .map_err(|e| format!("failed to create directories: {}", e))?;
+    // Create parent directories if they don't exist yet. We do this BEFORE
+    // canonicalizing because dunce::canonicalize requires the path to exist.
+    let parent = file_path
+        .parent()
+        .ok_or_else(|| "invalid path: no parent".to_string())?
+        .to_path_buf();
+    tokio::fs::create_dir_all(&parent)
+        .await
+        .map_err(|e| format!("failed to create directories: {}", e))?;
+
+    // Now the parent exists -> canonicalize it and verify it lives inside
+    // the vault. Defense-in-depth: blocks symlink-based escapes that
+    // `reject_traversal` cannot detect (a folder argument that is itself a
+    // symlink pointing outside the vault).
+    let canonical_parent =
+        dunce::canonicalize(&parent).map_err(|e| format!("path canonicalization failed: {}", e))?;
+    if !canonical_parent.starts_with(&canonical_vault) {
+        return Err(format!(
+            "path traversal rejected: {} is outside vault root",
+            file_path.display()
+        ));
     }
+
+    // Reconstruct the safe file path from the canonical parent + filename
+    // so the actual write operation cannot be redirected by a TOCTOU swap.
+    let safe_file_path = canonical_parent.join(&file_name);
 
     let title = file_name.trim_end_matches(".md");
     let content = format!("# {}\n\n", title);
-    tokio::fs::write(&file_path, &content)
+    tokio::fs::write(&safe_file_path, &content)
         .await
         .map_err(|e| format!("failed to create note: {}", e))?;
 
-    tracing::info!(path = %file_path.display(), "note created");
+    tracing::info!(path = %safe_file_path.display(), "note created");
 
     // Background reindex (same pattern as save_note).
     tokio::spawn(async move {
         let state: tauri::State<ForgeState> = app.state();
         let mut guard = state.store.lock().await;
         if let Some(store) = guard.as_mut() {
-            if let Err(e) = store.reindex_file(&file_path) {
+            if let Err(e) = store.reindex_file(&safe_file_path) {
                 tracing::warn!(
                     error = %e,
-                    path = %file_path.display(),
+                    path = %safe_file_path.display(),
                     "background reindex failed"
                 );
             }
@@ -108,16 +134,41 @@ pub async fn create_folder(
         guard.clone().ok_or("vault not open")?
     };
 
+    // Canonicalize the vault root for the path-traversal check below.
+    let canonical_vault = dunce::canonicalize(&vault_path)
+        .map_err(|e| format!("vault canonicalization failed: {}", e))?;
+
     let dir_path = vault_path.join(&rel_path);
 
     if dir_path.exists() {
         return Err(format!("folder already exists: {}", rel_path));
     }
 
+    // Create the folder chain, then canonicalize and verify the result
+    // stays inside the vault. If a parent component is a symlink pointing
+    // outside the vault, `create_dir_all` would silently follow it; we
+    // detect this AFTER creation and roll back.
     tokio::fs::create_dir_all(&dir_path)
         .await
         .map_err(|e| format!("failed to create folder: {}", e))?;
 
-    tracing::info!(path = %dir_path.display(), "folder created");
+    let canonical_dir = match dunce::canonicalize(&dir_path) {
+        Ok(p) => p,
+        Err(e) => {
+            // Roll back the partial creation (best-effort).
+            let _ = tokio::fs::remove_dir_all(&dir_path).await;
+            return Err(format!("path canonicalization failed: {}", e));
+        }
+    };
+    if !canonical_dir.starts_with(&canonical_vault) {
+        // Roll back: this dir was created outside the vault via a symlink.
+        let _ = tokio::fs::remove_dir_all(&dir_path).await;
+        return Err(format!(
+            "path traversal rejected: {} is outside vault root",
+            dir_path.display()
+        ));
+    }
+
+    tracing::info!(path = %canonical_dir.display(), "folder created");
     Ok(rel_path)
 }

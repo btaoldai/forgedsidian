@@ -42,11 +42,9 @@ pub async fn delete_folder(
     }
 
     // Security: ensure the path is within the vault.
-    let canonical = dir_path
-        .canonicalize()
-        .map_err(|e| format!("failed to resolve path: {}", e))?;
-    let vault_canonical = vault_path
-        .canonicalize()
+    let canonical =
+        dunce::canonicalize(&dir_path).map_err(|e| format!("failed to resolve path: {}", e))?;
+    let vault_canonical = dunce::canonicalize(&vault_path)
         .map_err(|e| format!("failed to resolve vault path: {}", e))?;
 
     if !canonical.starts_with(&vault_canonical) || canonical == vault_canonical {
