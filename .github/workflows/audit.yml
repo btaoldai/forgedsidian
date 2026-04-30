@@ -1,5 +1,19 @@
 name: Audit
 
+# Security audit workflow.
+#
+# Triggers:
+#   - schedule: weekly proactive scan to catch newly published advisories
+#       even when no code change happened.
+#   - workflow_dispatch: on-demand manual run (Actions tab > Run workflow).
+#   - push: scoped to dependency manifests so we re-audit any time the
+#       dependency graph or license/ban policy actually changes.
+#   - pull_request: every PR targeting `main` is audited so that branch
+#       protection's "required status checks" are reliably reported on the
+#       PR. We deliberately do NOT use a `paths` filter here so that a PR
+#       which does not touch dependencies (e.g. a security hardening PR
+#       that only edits source files) still satisfies the required check.
+#       `paths-ignore` excludes pure documentation PRs to spare CI minutes.
 on:
   schedule:
     # Every Monday at 06:00 UTC
@@ -10,6 +24,14 @@ on:
       - '**/Cargo.toml'
       - '**/Cargo.lock'
       - 'deny.toml'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE*'
+      - '.gitignore'
+      - '.editorconfig'
 
 jobs:
   cargo-audit:
