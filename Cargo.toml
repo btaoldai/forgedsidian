@@ -60,7 +60,7 @@ pulldown-cmark = "0.12"
 
 # Graph layout (forge-graph)
 # petgraph is the de-facto graph data structure crate in Rust
-petgraph    = "0.6"
+petgraph    = "0.8"
 
 # Unique IDs
 # Note: `js` feature is needed for WASM targets (ignored on native)
