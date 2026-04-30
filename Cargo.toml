@@ -79,7 +79,7 @@ chrono      = { version = "0.4", features = ["serde"] }
 # Cryptographic integrity (forge-vault manifest signing)
 hmac        = "0.12"
 sha2        = "0.10"
-rand        = { version = "0.8", features = ["std"] }
+rand        = { version = "0.10", features = ["std"] }
 hex-literal = "0.4"
 hex         = "0.4"
 
