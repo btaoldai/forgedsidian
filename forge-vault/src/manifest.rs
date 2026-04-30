@@ -16,7 +16,7 @@
 //! (same fallback as a corrupt or missing manifest).
 
 use forge_core::NoteId;
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use serde::{Deserialize, Serialize};
 use sha2::Sha256;
 use std::{
