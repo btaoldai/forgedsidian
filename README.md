@@ -13,17 +13,34 @@
 
 ---
 
-## Why Forgexalith? (origin story)
+## Why Forgexalith? (Origin Story)
 
-My day-to-day knowledge base lives in an Obsidian vault that has grown to 700+ markdown notes across 17 000+ files, spread across infrastructure projects (Docker Swarm on a VPS, Raspberry Pi homelab), MCP servers, Solana trading research, technical references, and a decade of personal admin and notes.
+I keep my notes in a local markdown vault. Over a few years it grew to ~17k files -- mostly DevOps runbooks, course materials I wrote for cybersecurity classes, and personal research. At that size, two things broke:
 
-At that scale, the existing tooling started to creak. The graph view became sluggish past a few thousand nodes. Search missed notes whose title did not lexically match my query. The Electron runtime added a heavy memory footprint for what is, at its core, a markdown index. I had no Rust-side API to bulk-script operations on my vault. The on-disk index had no integrity signature, so I could not tell if it had been silently corrupted.
+- **The graph view auto-DDoS'd itself** past a few thousand nodes. The interactive layout would lock up the UI, then the whole app. Not a soft slowdown -- a wall.
+- **No clean way to script the vault from Rust**. I wanted to bulk-rewrite, validate, and audit notes from a real language and a real type system, not from a sandboxed plugin runtime.
 
-So I started rebuilding the PKM engine from scratch in Rust -- not as an Obsidian fork, not as a plugin, but as a parallel engine that consumes the same vault format (plain markdown + wikilinks + frontmatter YAML) and gives me full control over the indexing, the graph layout, the storage backend, and the security model.
+I first tried writing a plugin to fix the graph problem. Hit the limits of the sandbox quickly enough that it became more interesting to rewrite the whole engine from scratch, in Rust, on the side. That side-project is Forgexalith.
 
-That engine is **Forgexalith**. It exists today as an early-alpha desktop app: Tauri 2 backend, Leptos 0.7 CSR frontend (zero-JS, compiled to WebAssembly), Tantivy full-text search, force-directed graph rendered on wgpu, HMAC-signed manifest, append-only audit log, 12 hardening fixes already applied, and 239 tests green at baseline Phase 19.
+It's a standalone PKM engine that reads the same plain-text vault format you'll find in Obsidian.md, Logseq, and other markdown-and-wikilinks notebooks. Not a fork or a plugin -- a parallel codebase. Your `.md` files stay yours; this engine just gives me (and you, if it's useful) a different set of trade-offs to operate on them.
 
-The bet of opening the source is simple : if my problems with vault-scale PKM tools are common enough that other people have them too, the modular crate structure (8 crates, MIT-licensed) makes it easy for them to take what works and contribute back what improves it.
+### Current state (early alpha)
+
+Built natively on:
+
+- **Tauri 2** desktop shell, **Leptos 0.7** CSR frontend (Rust -> WASM)
+- **Tantivy** for full-text search
+- **wgpu** for graph rendering (native, no canvas/SVG fallback) -- this is the part that solves the original DDoS problem
+- **HMAC-SHA256** signed manifests, append-only audit log on the index
+- 239 tests passing on the baseline
+
+The hardening pass targets the standard vulnerability classes you'd expect on a desktop tool that touches user files: path traversal (**CWE-22**), symlink following (**CWE-59**), TOCTOU races (**CWE-367**), HTML rendering XSS (**CWE-79**), plus Windows-specific UNC path handling. Nothing fancy -- just the boring stuff that should be in every PKM tool that reads arbitrary user input.
+
+### Why open-source
+
+If you're running into the same walls on a large markdown vault, the code is here. The workspace is split into 8 MIT-licensed crates (`forge-core`, `forge-vault`, `forge-graph`, `forge-renderer`, `forge-editor`, `forge-canvas`, `forge-ui`, `forge-app`). Pull what's useful, ignore the rest, file an issue if something is broken -- that's the whole social contract.
+
+It's not trying to replace any specific tool, and it's not affiliated with any of them. See [NOTICE.md](./NOTICE.md) for the explicit no-affiliation statement (Run-12, coming soon).
 
 ## The two-repo story
 
