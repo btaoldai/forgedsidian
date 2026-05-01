@@ -204,9 +204,11 @@ fn load_or_create_hmac_key(vault_root: &Path) -> std::io::Result<Vec<u8>> {
     }
 
     // Generate a new key.
-    use rand::RngCore;
+    use rand::TryRng;
     let mut key = vec![0u8; HMAC_KEY_LEN];
-    rand::thread_rng().fill_bytes(&mut key);
+    rand::rng()
+        .try_fill_bytes(&mut key)
+        .expect("OS RNG failure (extremely rare, indicates kernel issue)");
 
     let hex_str = hex::encode(&key);
     std::fs::write(&key_path, hex_str)?;
