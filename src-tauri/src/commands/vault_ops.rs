@@ -404,8 +404,7 @@ pub async fn save_canvas_drawings(
     let vault_path = state.vault_path.lock().await;
     let vault = vault_path.as_ref().ok_or("no vault open")?;
     let dir = vault.join(".forgexalith");
-    std::fs::create_dir_all(&dir)
-        .map_err(|e| format!("failed to create .forgexalith dir: {e}"))?;
+    std::fs::create_dir_all(&dir).map_err(|e| format!("failed to create .forgexalith dir: {e}"))?;
     let file = dir.join("canvas-drawings.json");
     let json =
         serde_json::to_string_pretty(&drawings).map_err(|e| format!("serialization error: {e}"))?;
