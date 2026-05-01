@@ -50,7 +50,7 @@ impl GpuContext {
                 force_fallback_adapter: false,
             })
             .await
-            .ok_or(GpuInitError::NoAdapter)?;
+            .map_err(|_| GpuInitError::NoAdapter)?;
 
         tracing::info!(
             backend = ?adapter.get_info().backend,
@@ -59,16 +59,15 @@ impl GpuContext {
         );
 
         let (device, queue) = adapter
-            .request_device(
-                &wgpu::DeviceDescriptor {
-                    label: Some("forge-renderer"),
-                    required_features: wgpu::Features::empty(),
-                    required_limits: wgpu::Limits::downlevel_webgl2_defaults()
-                        .using_resolution(adapter.limits()),
-                    memory_hints: wgpu::MemoryHints::Performance,
-                },
-                None,
-            )
+            .request_device(&wgpu::DeviceDescriptor {
+                label: Some("forge-renderer"),
+                required_features: wgpu::Features::empty(),
+                required_limits: wgpu::Limits::downlevel_webgl2_defaults()
+                    .using_resolution(adapter.limits()),
+                memory_hints: wgpu::MemoryHints::Performance,
+                experimental_features: wgpu::ExperimentalFeatures::disabled(),
+                trace: wgpu::Trace::Off,
+            })
             .await
             .map_err(|e| GpuInitError::Device(e.to_string()))?;
 
