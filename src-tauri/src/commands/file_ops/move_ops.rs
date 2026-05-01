@@ -65,17 +65,17 @@ pub async fn move_file(
 
     let src_path = vault_path.join(&from);
     if !src_path.exists() {
-        return Err(format!("source file does not exist: {}", from));
+        return Err(format!("source file does not exist: {from}"));
     }
     if !src_path.is_file() {
-        return Err(format!("source is not a file: {}", from));
+        return Err(format!("source is not a file: {from}"));
     }
 
     // Security: ensure source is within vault
     let src_canonical =
-        dunce::canonicalize(&src_path).map_err(|e| format!("failed to resolve source: {}", e))?;
+        dunce::canonicalize(&src_path).map_err(|e| format!("failed to resolve source: {e}"))?;
     let vault_canonical =
-        dunce::canonicalize(&vault_path).map_err(|e| format!("failed to resolve vault: {}", e))?;
+        dunce::canonicalize(&vault_path).map_err(|e| format!("failed to resolve vault: {e}"))?;
     if !src_canonical.starts_with(&vault_canonical) {
         return Err("source is outside vault".to_string());
     }
@@ -90,7 +90,7 @@ pub async fn move_file(
     if !dest_dir.exists() {
         tokio::fs::create_dir_all(&dest_dir)
             .await
-            .map_err(|e| format!("failed to create destination directory: {}", e))?;
+            .map_err(|e| format!("failed to create destination directory: {e}"))?;
     }
 
     let file_name = src_path
@@ -110,14 +110,14 @@ pub async fn move_file(
 
     // Security: ensure destination is within vault
     let dest_dir_canonical = dunce::canonicalize(&dest_dir)
-        .map_err(|e| format!("failed to resolve destination: {}", e))?;
+        .map_err(|e| format!("failed to resolve destination: {e}"))?;
     if !dest_dir_canonical.starts_with(&vault_canonical) {
         return Err("destination is outside vault".to_string());
     }
 
     tokio::fs::rename(&src_path, &dest_path)
         .await
-        .map_err(|e| format!("failed to move file: {}", e))?;
+        .map_err(|e| format!("failed to move file: {e}"))?;
 
     let new_rel = dest_path
         .strip_prefix(&vault_path)
@@ -166,17 +166,17 @@ pub async fn move_folder(
 
     let src_path = vault_path.join(&from);
     if !src_path.exists() {
-        return Err(format!("source folder does not exist: {}", from));
+        return Err(format!("source folder does not exist: {from}"));
     }
     if !src_path.is_dir() {
-        return Err(format!("source is not a folder: {}", from));
+        return Err(format!("source is not a folder: {from}"));
     }
 
     // Security: ensure source is within vault and not the vault root
     let src_canonical =
-        dunce::canonicalize(&src_path).map_err(|e| format!("failed to resolve source: {}", e))?;
+        dunce::canonicalize(&src_path).map_err(|e| format!("failed to resolve source: {e}"))?;
     let vault_canonical =
-        dunce::canonicalize(&vault_path).map_err(|e| format!("failed to resolve vault: {}", e))?;
+        dunce::canonicalize(&vault_path).map_err(|e| format!("failed to resolve vault: {e}"))?;
     if !src_canonical.starts_with(&vault_canonical) || src_canonical == vault_canonical {
         return Err("cannot move vault root or paths outside vault".to_string());
     }
@@ -213,19 +213,19 @@ pub async fn move_folder(
     if !dest_parent.exists() {
         tokio::fs::create_dir_all(&dest_parent)
             .await
-            .map_err(|e| format!("failed to create destination directory: {}", e))?;
+            .map_err(|e| format!("failed to create destination directory: {e}"))?;
     }
 
     // Security: ensure destination is within vault
     let dest_parent_canonical = dunce::canonicalize(&dest_parent)
-        .map_err(|e| format!("failed to resolve destination: {}", e))?;
+        .map_err(|e| format!("failed to resolve destination: {e}"))?;
     if !dest_parent_canonical.starts_with(&vault_canonical) {
         return Err("destination is outside vault".to_string());
     }
 
     tokio::fs::rename(&src_path, &dest_path)
         .await
-        .map_err(|e| format!("failed to move folder: {}", e))?;
+        .map_err(|e| format!("failed to move folder: {e}"))?;
 
     let new_rel = dest_path
         .strip_prefix(&vault_path)

@@ -47,7 +47,7 @@ mod tests {
         let error = EditorError::MalformedFrontmatter {
             reason: "test reason".to_string(),
         };
-        let debug_str = format!("{:?}", error);
+        let debug_str = format!("{error:?}");
         assert!(debug_str.contains("MalformedFrontmatter"));
     }
 

@@ -239,7 +239,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -253,7 +253,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -267,7 +267,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -284,7 +284,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -298,7 +298,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -322,7 +322,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -342,7 +342,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["my tag", "another tag", "spaced-tag"]
+            ["my tag", "another tag", "spaced-tag"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -358,7 +358,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.aliases,
-            vec!["alt1", "alt2", "alt3"]
+            ["alt1", "alt2", "alt3"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -372,7 +372,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.aliases,
-            vec!["alias1", "alias2"]
+            ["alias1", "alias2"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()

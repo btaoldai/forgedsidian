@@ -32,7 +32,7 @@ mod tests {
         // Error message should be formatted correctly
         let id = NoteId::new();
         let error = GraphError::NoteNotFound { id };
-        let msg = format!("{}", error);
+        let msg = format!("{error}");
         assert!(msg.contains("not found in graph"));
     }
 }

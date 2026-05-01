@@ -59,7 +59,7 @@ fn bench_graph_build(c: &mut Criterion) {
         }
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}n_{}ratio", n, ratio)),
+            BenchmarkId::from_parameter(format!("{n}n_{ratio}ratio")),
             &(ids.clone(), links.clone()),
             |b, (ids, links)| {
                 b.iter(|| {
@@ -86,7 +86,7 @@ fn bench_snapshot(c: &mut Criterion) {
         let (graph, _ids) = build_test_graph(n, 0.5);
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_nodes", n)),
+            BenchmarkId::from_parameter(format!("{n}_nodes")),
             &graph,
             |b, graph| {
                 b.iter(|| {
@@ -107,7 +107,7 @@ fn bench_snapshot_json(c: &mut Criterion) {
         let (graph, _ids) = build_test_graph(n, 0.5);
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_nodes", n)),
+            BenchmarkId::from_parameter(format!("{n}_nodes")),
             &graph,
             |b, graph| {
                 b.iter(|| {
@@ -130,7 +130,7 @@ fn bench_remove_edges(c: &mut Criterion) {
         let (base_graph, ids) = build_test_graph(n, 0.5);
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_nodes", n)),
+            BenchmarkId::from_parameter(format!("{n}_nodes")),
             &(base_graph, ids.clone()),
             |b, (_base, ids)| {
                 b.iter_batched(

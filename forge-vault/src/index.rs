@@ -59,7 +59,7 @@ impl VaultIndex {
                 // Detection must handle multiple locales (English:
                 // "Permission denied", French: "Accès refusé", etc.)
                 // and multiple error formats ("code: 5", "os error 5").
-                let err_str = format!("{}", e);
+                let err_str = format!("{e}");
                 let err_lower = err_str.to_lowercase();
                 let is_permission_err = err_str.contains("PermissionDenied")
                     || err_lower.contains("permission denied")

@@ -76,8 +76,7 @@ fn test_reject_traversal_dotdot_variations() {
         let result = commands::reject_traversal(&path);
         assert!(
             result.is_err(),
-            "Path {:?} should be rejected for containing ..",
-            path
+            "Path {path:?} should be rejected for containing .."
         );
     }
 }
@@ -98,15 +97,12 @@ fn test_reject_traversal_with_multiple_variants() {
         if should_fail {
             assert!(
                 result.is_err(),
-                "reject_traversal should block '{}' but got Ok",
-                path_str
+                "reject_traversal should block '{path_str}' but got Ok"
             );
         } else {
             assert!(
                 result.is_ok(),
-                "reject_traversal should accept '{}' but got Err: {:?}",
-                path_str,
-                result
+                "reject_traversal should accept '{path_str}' but got Err: {result:?}"
             );
         }
     }
@@ -137,7 +133,7 @@ fn test_reject_traversal_percent_encoded_is_literal() {
 fn test_reject_traversal_deep_nested_is_safe() {
     // Deeply nested relative path with no `..` — must pass.
     let deep_path = (0..50)
-        .map(|i| format!("level{}", i))
+        .map(|i| format!("level{i}"))
         .collect::<Vec<_>>()
         .join("/");
     let path = PathBuf::from(&deep_path);
@@ -160,8 +156,7 @@ fn test_reject_traversal_cross_platform_separators() {
     #[cfg(windows)]
     assert!(
         result.is_err(),
-        "Windows should reject backslash traversal: {:?}",
-        result
+        "Windows should reject backslash traversal: {result:?}"
     );
 
     #[cfg(unix)]
@@ -223,9 +218,7 @@ fn test_validate_vault_path_accepts_temp_dir() {
     let result = commands::validate_vault_path(temp_str);
     assert!(
         result.is_ok(),
-        "validate_vault_path should accept the OS temp dir ({}): {:?}",
-        temp_str,
-        result
+        "validate_vault_path should accept the OS temp dir ({temp_str}): {result:?}"
     );
     let canonical = result.unwrap();
     assert!(canonical.is_dir(), "result must be a directory");
@@ -270,8 +263,7 @@ fn test_validate_vault_path_rejects_traversal() {
     let result = commands::validate_vault_path(with_dotdot_str);
     assert!(
         result.is_err(),
-        "path containing .. must be rejected: {:?}",
-        result
+        "path containing .. must be rejected: {result:?}"
     );
     assert!(
         result.unwrap_err().contains("traversal"),

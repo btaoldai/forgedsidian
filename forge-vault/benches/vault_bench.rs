@@ -21,11 +21,11 @@ fn create_test_vault(n: usize) -> (TempDir, PathBuf) {
     let root = dir.path().to_path_buf();
 
     for i in 0..n {
-        let name = format!("note-{:04}.md", i);
+        let name = format!("note-{i:04}.md");
         let path = root.join(&name);
 
         // Every 3rd note links to the next two notes (creates a connected graph).
-        let mut body = format!("# Note {}\n\nThis is note number {}.\n\n", i, i);
+        let mut body = format!("# Note {i}\n\nThis is note number {i}.\n\n");
         if i % 3 == 0 && i + 2 < n {
             body.push_str(&format!(
                 "See also [[note-{:04}]] and [[note-{:04}]].\n",
@@ -54,7 +54,7 @@ fn bench_vault_open(c: &mut Criterion) {
         let (_dir, root) = create_test_vault(size);
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_notes", size)),
+            BenchmarkId::from_parameter(format!("{size}_notes")),
             &root,
             |b, root| {
                 b.iter(|| {
@@ -89,7 +89,7 @@ fn bench_vault_open_incremental(c: &mut Criterion) {
         drop(_store);
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_notes", size)),
+            BenchmarkId::from_parameter(format!("{size}_notes")),
             &root,
             |b, root| {
                 b.iter(|| {
@@ -130,7 +130,7 @@ fn bench_graph_snapshot(c: &mut Criterion) {
         let store = VaultStore::open(&root).expect("open vault");
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_notes", size)),
+            BenchmarkId::from_parameter(format!("{size}_notes")),
             &store,
             |b, store| {
                 b.iter(|| {
@@ -153,7 +153,7 @@ fn bench_list_note_paths(c: &mut Criterion) {
         let store = VaultStore::open(&root).expect("open vault");
 
         group.bench_with_input(
-            BenchmarkId::from_parameter(format!("{}_notes", size)),
+            BenchmarkId::from_parameter(format!("{size}_notes")),
             &store,
             |b, store| {
                 b.iter(|| {

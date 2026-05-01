@@ -144,12 +144,12 @@ pub async fn list_all_files(state: State<'_, ForgeState>) -> Result<Vec<String>,
         let ignore = load_forge_ignore(&root);
         let mut out = Vec::new();
         scan_all_files_recursive(&root, &root, &mut out, &ignore)
-            .map_err(|e| format!("failed to scan files: {}", e))?;
+            .map_err(|e| format!("failed to scan files: {e}"))?;
         out.sort();
         Ok(out)
     })
     .await
-    .map_err(|e| format!("spawn_blocking join error: {}", e))??;
+    .map_err(|e| format!("spawn_blocking join error: {e}"))??;
 
     Ok(files)
 }
@@ -170,12 +170,12 @@ pub async fn list_folders(state: State<'_, ForgeState>) -> Result<Vec<String>, S
         let ignore = load_forge_ignore(&root);
         let mut out = Vec::new();
         scan_folders_recursive(&root, &root, &mut out, &ignore)
-            .map_err(|e| format!("failed to scan folders: {}", e))?;
+            .map_err(|e| format!("failed to scan folders: {e}"))?;
         out.sort();
         Ok(out)
     })
     .await
-    .map_err(|e| format!("spawn_blocking join error: {}", e))??;
+    .map_err(|e| format!("spawn_blocking join error: {e}"))??;
 
     Ok(folders)
 }

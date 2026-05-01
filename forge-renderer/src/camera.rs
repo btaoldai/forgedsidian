@@ -179,10 +179,7 @@ mod tests {
     fn assert_vec2_approx(actual: Vec2, expected: Vec2, msg: &str) {
         assert!(
             (actual.x - expected.x).abs() < EPSILON && (actual.y - expected.y).abs() < EPSILON,
-            "Vec2 mismatch ({}): got {:?}, expected {:?}",
-            msg,
-            actual,
-            expected
+            "Vec2 mismatch ({msg}): got {actual:?}, expected {expected:?}"
         );
     }
 
@@ -190,10 +187,7 @@ mod tests {
     fn assert_f32_approx(actual: f32, expected: f32, msg: &str) {
         assert!(
             (actual - expected).abs() < EPSILON,
-            "f32 mismatch ({}): got {}, expected {}",
-            msg,
-            actual,
-            expected
+            "f32 mismatch ({msg}): got {actual}, expected {expected}"
         );
     }
 
