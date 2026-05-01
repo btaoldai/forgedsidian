@@ -50,7 +50,7 @@ tauri-build = { version = "2", features = [] }
 leptos      = { version = "0.7", features = ["csr"] }
 
 # Full-text search (forge-vault)
-tantivy     = "0.22"
+tantivy     = "0.26"
 
 # File-system watcher (forge-vault)
 notify      = "8"
