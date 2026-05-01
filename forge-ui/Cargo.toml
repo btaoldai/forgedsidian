@@ -5,7 +5,7 @@ version     = "0.1.0"
 edition     = "2021"
 authors     = ["Baptiste Ochlafen <56604230+btaoldai@users.noreply.github.com>"]
 license     = "MIT"
-repository  = "https://github.com/btaoldai/forgedsidian"
+repository  = "https://github.com/btaoldai/forgexalith"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

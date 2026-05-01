@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn test_note_id_clone_and_equality() {
         let id1 = NoteId::new();
-        let id2 = id1.clone();
+        let id2 = id1;
 
         assert_eq!(id1, id2);
     }
@@ -144,7 +144,7 @@ mod tests {
     #[test]
     fn test_tag_id_clone_and_equality() {
         let id1 = TagId::new();
-        let id2 = id1.clone();
+        let id2 = id1;
 
         assert_eq!(id1, id2);
     }

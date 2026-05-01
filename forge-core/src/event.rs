@@ -1,4 +1,4 @@
-//! Domain events emitted by the Forgedsidian engine.
+//! Domain events emitted by the Forgexalith engine.
 //!
 //! Events flow from the engine core → Tauri backend → Leptos frontend via the
 //! IPC channel.  Keeping them in `forge-core` allows both the backend

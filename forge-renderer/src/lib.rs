@@ -1,4 +1,4 @@
-//! GPU-accelerated graph renderer for Forgedsidian.
+//! GPU-accelerated graph renderer for Forgexalith.
 //!
 //! This crate provides a `GraphRenderer` that uses wgpu to render thousands
 //! of nodes and edges via GPU instancing. It replaces the SVG-based renderer
@@ -137,7 +137,7 @@ impl GraphRenderer {
         let cam_uniform = self.camera.uniform();
         self.pipeline.update_camera(&self.gpu, &cam_uniform);
 
-        // Dark background matching Forgedsidian theme.
+        // Dark background matching Forgexalith theme.
         let clear_color = wgpu::Color {
             r: 0.059, // #0F1923 (--trl-abyss)
             g: 0.098,

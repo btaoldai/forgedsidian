@@ -1,6 +1,6 @@
 # forge-core
 
-Shared foundation for the Forgedsidian PKM engine.
+Shared foundation for the Forgexalith PKM engine.
 
 ## Purpose
 

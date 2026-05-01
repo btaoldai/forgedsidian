@@ -1,4 +1,4 @@
-# Forgedsidian 🦀
+# Forgexalith 🦀
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Rust 1.88+](https://img.shields.io/badge/Rust-1.88%2B-orange.svg)](https://www.rust-lang.org/)
@@ -13,7 +13,7 @@
 
 ---
 
-## Why Forgedsidian? (origin story)
+## Why Forgexalith? (origin story)
 
 My day-to-day knowledge base lives in an Obsidian vault that has grown to 700+ markdown notes across 17 000+ files, spread across infrastructure projects (Docker Swarm on a VPS, Raspberry Pi homelab), MCP servers, Solana trading research, technical references, and a decade of personal admin and notes.
 
@@ -21,19 +21,19 @@ At that scale, the existing tooling started to creak. The graph view became slug
 
 So I started rebuilding the PKM engine from scratch in Rust -- not as an Obsidian fork, not as a plugin, but as a parallel engine that consumes the same vault format (plain markdown + wikilinks + frontmatter YAML) and gives me full control over the indexing, the graph layout, the storage backend, and the security model.
 
-That engine is **Forgedsidian**. It exists today as an early-alpha desktop app: Tauri 2 backend, Leptos 0.7 CSR frontend (zero-JS, compiled to WebAssembly), Tantivy full-text search, force-directed graph rendered on wgpu, HMAC-signed manifest, append-only audit log, 12 hardening fixes already applied, and 239 tests green at baseline Phase 19.
+That engine is **Forgexalith**. It exists today as an early-alpha desktop app: Tauri 2 backend, Leptos 0.7 CSR frontend (zero-JS, compiled to WebAssembly), Tantivy full-text search, force-directed graph rendered on wgpu, HMAC-signed manifest, append-only audit log, 12 hardening fixes already applied, and 239 tests green at baseline Phase 19.
 
 The bet of opening the source is simple : if my problems with vault-scale PKM tools are common enough that other people have them too, the modular crate structure (8 crates, MIT-licensed) makes it easy for them to take what works and contribute back what improves it.
 
 ## The two-repo story
 
-Forgedsidian (this repo) is the **product** -- a Rust PKM you can clone, build, and use today.
+Forgexalith (this repo) is the **product** -- a Rust PKM you can clone, build, and use today.
 
 [claude-root-orchestrator](https://github.com/btaoldai/claude-root-orchestrator) is the **factory** -- the open methodology of AI-assisted Rust development that built it: orchestration system, skills, routing rules, CLAUDE.md hierarchy, multi-agent coordination patterns.
 
 If you are wondering how a single developer can maintain an 8-crate Rust workspace with 239 tests, ADRs, C4 diagrams, dependency audits, SBOMs, and a 700-note dogfood vault all at once -- the answer lives in the orchestrator repo. Reading both gives you the full picture: not just what was built, but how.
 
-You don't have to use the orchestrator to contribute to Forgedsidian. But if you want to apply the same pattern to your own projects, that's where you start.
+You don't have to use the orchestrator to contribute to Forgexalith. But if you want to apply the same pattern to your own projects, that's where you start.
 
 ## Features
 
@@ -83,8 +83,8 @@ You don't have to use the orchestrator to contribute to Forgedsidian. But if you
 ### Build & run
 
 ```bash
-git clone https://github.com/btaoldai/forgedsidian.git
-cd forgedsidian
+git clone https://github.com/btaoldai/forgexalith.git
+cd forgexalith
 
 # Run in dev mode (hot reload)
 cargo tauri dev
@@ -180,7 +180,7 @@ For the security policy, see [SECURITY.md](SECURITY.md). For the code of conduct
 
 ## AI Contributors & methodology
 
-Forgedsidian is built with AI-assisted development as a core, transparent part of the workflow. Claude Code (Anthropic) is the lead orchestrator for code generation, refactoring, and architecture. Perplexity contributes to technical research. Gemini provides independent code review and audit cross-reference.
+Forgexalith is built with AI-assisted development as a core, transparent part of the workflow. Claude Code (Anthropic) is the lead orchestrator for code generation, refactoring, and architecture. Perplexity contributes to technical research. Gemini provides independent code review and audit cross-reference.
 
 For the full attribution, methodology, and human-in-the-loop principles, see [AI-CONTRIBUTORS.md](AI-CONTRIBUTORS.md) and the companion repo [claude-root-orchestrator](https://github.com/btaoldai/claude-root-orchestrator).
 

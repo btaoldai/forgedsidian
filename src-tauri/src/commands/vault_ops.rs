@@ -23,7 +23,7 @@ async fn start_watcher(
     app: &AppHandle,
 ) -> Result<(), String> {
     let (watcher, mut rx) =
-        VaultWatcher::start(vault_path).map_err(|e| format!("failed to start watcher: {}", e))?;
+        VaultWatcher::start(vault_path).map_err(|e| format!("failed to start watcher: {e}"))?;
     *state.watcher.lock().await = Some(watcher);
 
     let app = app.clone();
@@ -106,7 +106,7 @@ async fn open_vault_with_progress(vault_path: &str, app: &AppHandle) -> Result<V
         )
     })
     .await
-    .map_err(|e| format!("spawn_blocking join error: {}", e))?
+    .map_err(|e| format!("spawn_blocking join error: {e}"))?
     .map_err(|e| e.to_string())?;
 
     // tx is dropped when spawn_blocking completes → channel closes → relay ends.
@@ -348,7 +348,7 @@ pub async fn open_in_default_app(
     let forbidden_schemes = ["http://", "https://", "javascript:", "data:", "file://"];
     for scheme in &forbidden_schemes {
         if lower_path.starts_with(scheme) {
-            return Err(format!("URL scheme '{}' not allowed", scheme));
+            return Err(format!("URL scheme '{scheme}' not allowed"));
         }
     }
 
@@ -373,7 +373,7 @@ pub async fn open_in_default_app(
 
     app.opener()
         .open_path(&path, None::<&str>)
-        .map_err(|e| format!("Failed to open '{}': {}", path, e))?;
+        .map_err(|e| format!("Failed to open '{path}': {e}"))?;
     tracing::info!(
         cmd = "open_in_default_app",
         path = %path,
@@ -390,7 +390,7 @@ pub async fn get_canvas(state: State<'_, ForgeState>) -> Result<serde_json::Valu
     serde_json::to_value(&*canvas).map_err(|e| e.to_string())
 }
 
-/// Save canvas drawing elements to `.forgedsidian/canvas-drawings.json`
+/// Save canvas drawing elements to `.forgexalith/canvas-drawings.json`
 /// inside the vault directory.
 ///
 /// The payload is a raw JSON value (array of drawing elements serialised
@@ -403,9 +403,8 @@ pub async fn save_canvas_drawings(
 ) -> Result<(), String> {
     let vault_path = state.vault_path.lock().await;
     let vault = vault_path.as_ref().ok_or("no vault open")?;
-    let dir = vault.join(".forgedsidian");
-    std::fs::create_dir_all(&dir)
-        .map_err(|e| format!("failed to create .forgedsidian dir: {e}"))?;
+    let dir = vault.join(".forgexalith");
+    std::fs::create_dir_all(&dir).map_err(|e| format!("failed to create .forgexalith dir: {e}"))?;
     let file = dir.join("canvas-drawings.json");
     let json =
         serde_json::to_string_pretty(&drawings).map_err(|e| format!("serialization error: {e}"))?;
@@ -414,7 +413,7 @@ pub async fn save_canvas_drawings(
     Ok(())
 }
 
-/// Load canvas drawing elements from `.forgedsidian/canvas-drawings.json`.
+/// Load canvas drawing elements from `.forgexalith/canvas-drawings.json`.
 ///
 /// Returns `null` if the file does not exist (first use, no drawings yet).
 #[tauri::command]
@@ -423,7 +422,7 @@ pub async fn load_canvas_drawings(
 ) -> Result<serde_json::Value, String> {
     let vault_path = state.vault_path.lock().await;
     let vault = vault_path.as_ref().ok_or("no vault open")?;
-    let file = vault.join(".forgedsidian").join("canvas-drawings.json");
+    let file = vault.join(".forgexalith").join("canvas-drawings.json");
     if !file.exists() {
         return Ok(serde_json::Value::Null);
     }

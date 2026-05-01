@@ -4,7 +4,7 @@ Note storage, full-text indexing and metadata search.
 
 ## Purpose
 
-Manages persistent vault state: reading and writing Markdown files from disk, building and maintaining a Tantivy full-text index, and exposing query APIs for note retrieval and search. Implements the storage layer and indexing backend that underpins the Forgedsidian engine.
+Manages persistent vault state: reading and writing Markdown files from disk, building and maintaining a Tantivy full-text index, and exposing query APIs for note retrieval and search. Implements the storage layer and indexing backend that underpins the Forgexalith engine.
 
 ## Key modules
 

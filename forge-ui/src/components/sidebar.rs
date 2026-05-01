@@ -384,7 +384,7 @@ pub fn SidebarContent() -> impl IntoView {
                         if active_matches {
                             // Guard: do not reload if the user has unsaved edits,
                             // otherwise we would overwrite their in-progress work.
-                            // This also prevents a reload loop when Forgedsidian
+                            // This also prevents a reload loop when Forgexalith
                             // itself saves a file and the watcher picks it up.
                             let tab_is_modified = tab_mgr.tabs.get_untracked()
                                 .iter()

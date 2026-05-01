@@ -264,7 +264,7 @@ pub async fn search_notes(query: &str) -> Result<Vec<String>, String> {
         .map_err(|e| format!("Failed to deserialize response: {}", e))
 }
 
-/// Save canvas drawing elements to the vault's `.forgedsidian/` directory.
+/// Save canvas drawing elements to the vault's `.forgexalith/` directory.
 ///
 /// The `drawings_json` is a raw `JsValue` (JSON array serialised from
 /// `Vec<DrawEl>` on the caller side) — passed through verbatim to the
@@ -286,7 +286,7 @@ pub async fn save_canvas_drawings(drawings_json: JsValue) -> Result<(), String> 
     Ok(())
 }
 
-/// Load canvas drawing elements from the vault's `.forgedsidian/` directory.
+/// Load canvas drawing elements from the vault's `.forgexalith/` directory.
 ///
 /// Returns `Ok(JsValue)` — either a JSON array or `null` if no file exists.
 pub async fn load_canvas_drawings() -> Result<JsValue, String> {

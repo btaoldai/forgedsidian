@@ -1,10 +1,10 @@
-# Threat model -- Forgedsidian
+# Threat model -- Forgexalith
 
-> Synthesis of the internal security review applied to Forgedsidian during phases 14-18 (April 2026). Focus: local-first PKM application, Tauri 2 + Leptos 0.7 CSR (compiled to WebAssembly).
+> Synthesis of the internal security review applied to Forgexalith during phases 14-18 (April 2026). Focus: local-first PKM application, Tauri 2 + Leptos 0.7 CSR (compiled to WebAssembly).
 
 ## Scope
 
-Forgedsidian is a local-first desktop application:
+Forgexalith is a local-first desktop application:
 
 - Runs as a single user on their machine.
 - No telemetry, no outbound network calls by the application itself.
@@ -20,7 +20,7 @@ This document focuses on:
 
 Out of scope:
 
-- Network-based attacks (Forgedsidian is not a server).
+- Network-based attacks (Forgexalith is not a server).
 - Multi-user / shared-machine scenarios (the application is intended for a single user; the documentation states this explicitly).
 - OS-level side-channel attacks.
 - Supply-chain compromise of dependencies (covered separately by `cargo-audit`, `cargo-deny`, and the SBOM in `docs/audits/`).
@@ -36,7 +36,7 @@ The review used **STRIDE** as a structuring framework:
 - **D** -- Denial of service
 - **E** -- Elevation of privilege
 
-For each STRIDE category, the review listed concrete attack scenarios applicable to Forgedsidian and the mitigations in place.
+For each STRIDE category, the review listed concrete attack scenarios applicable to Forgexalith and the mitigations in place.
 
 ## STRIDE summary
 

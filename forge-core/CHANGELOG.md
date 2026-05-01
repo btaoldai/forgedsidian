@@ -13,4 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Core data types: Note, NoteMetadata for representing workspace documents and their metadata
 - Shared utility functions and traits for type conversions and validation
-- Baseline foundation for all downstream crates in the Forgedsidian workspace
+- Baseline foundation for all downstream crates in the Forgexalith workspace

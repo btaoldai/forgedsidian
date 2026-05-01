@@ -4,7 +4,7 @@ Infinite canvas rendering primitives, hit-testing and ABCDE layout.
 
 ## Purpose
 
-Provides the core canvas abstraction for the Forgedsidian whiteboard: managing an infinite 2D canvas with arbitrary items (notes, tasks, shapes, embedded references), computing viewport-relative hit regions, and implementing the ABCDE prioritization framework for task organization. Intentionally `no_std`-compatible to support both native and WASM targets.
+Provides the core canvas abstraction for the Forgexalith whiteboard: managing an infinite 2D canvas with arbitrary items (notes, tasks, shapes, embedded references), computing viewport-relative hit regions, and implementing the ABCDE prioritization framework for task organization. Intentionally `no_std`-compatible to support both native and WASM targets.
 
 ## Key modules
 

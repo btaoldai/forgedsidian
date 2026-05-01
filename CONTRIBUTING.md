@@ -1,4 +1,4 @@
-# Contributing to Forgedsidian
+# Contributing to Forgexalith
 
 Thank you for considering a contribution. This project is in early stages, so there are many opportunities to help -- from typo fixes to new features.
 
@@ -8,18 +8,18 @@ This project follows the [Contributor Covenant 2.1](CODE_OF_CONDUCT.md). By part
 
 ## How we work
 
-Forgedsidian is built using an open AI-assisted methodology. You don't have to use it to contribute, but reading the companion repo [claude-root-orchestrator](https://github.com/btaoldai/claude-root-orchestrator) helps you decode our commit messages, PR descriptions, and ADRs. See also [AI-CONTRIBUTORS.md](AI-CONTRIBUTORS.md) for how AI assistants are used.
+Forgexalith is built using an open AI-assisted methodology. You don't have to use it to contribute, but reading the companion repo [claude-root-orchestrator](https://github.com/btaoldai/claude-root-orchestrator) helps you decode our commit messages, PR descriptions, and ADRs. See also [AI-CONTRIBUTORS.md](AI-CONTRIBUTORS.md) for how AI assistants are used.
 
 ## How to ask questions
 
-For open-ended questions, please use [Discussions](https://github.com/btaoldai/forgedsidian/discussions) (categories: Q&A, Ideas, Show & Tell). Reserve issues for actionable items (bugs, feature requests, documentation gaps).
+For open-ended questions, please use [Discussions](https://github.com/btaoldai/forgexalith/discussions) (categories: Q&A, Ideas, Show & Tell). Reserve issues for actionable items (bugs, feature requests, documentation gaps).
 
 ## How to report bugs
 
-1. Search [existing issues](https://github.com/btaoldai/forgedsidian/issues) first.
+1. Search [existing issues](https://github.com/btaoldai/forgexalith/issues) first.
 2. If your bug is new, open an issue using the **Bug report** template.
 3. Provide:
-   - Forgedsidian version (commit hash if from source)
+   - Forgexalith version (commit hash if from source)
    - Operating system and version (Windows / macOS / Linux)
    - Rust version (`rustc --version`)
    - Steps to reproduce
@@ -50,8 +50,8 @@ For larger features, please open a Discussion first to align on direction before
 
 ```bash
 # Clone
-git clone https://github.com/btaoldai/forgedsidian.git
-cd forgedsidian
+git clone https://github.com/btaoldai/forgexalith.git
+cd forgexalith
 
 # Compile check (fast)
 cargo check --workspace
@@ -124,7 +124,7 @@ This is encouraged, not stigmatized. We use AI assistants too. See [AI-CONTRIBUT
 
 ## First-time contributors
 
-Look for issues labeled [`good first issue`](https://github.com/btaoldai/forgedsidian/labels/good%20first%20issue). These are scoped to be approachable :
+Look for issues labeled [`good first issue`](https://github.com/btaoldai/forgexalith/labels/good%20first%20issue). These are scoped to be approachable :
 
 - Documentation typo fixes
 - Simple feature additions in a single crate
@@ -141,7 +141,7 @@ You acknowledge that this project is provided **AS IS**, without warranty. Maint
 
 ## Questions
 
-For questions about the contribution process itself, open a [Discussion](https://github.com/btaoldai/forgedsidian/discussions) in the Q&A category.
+For questions about the contribution process itself, open a [Discussion](https://github.com/btaoldai/forgexalith/discussions) in the Q&A category.
 
 For security vulnerabilities, see [SECURITY.md](SECURITY.md) -- do **not** open a public issue.
 

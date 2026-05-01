@@ -72,7 +72,7 @@ mod tests {
         let events = parse("Use `cargo build` to compile.");
         assert!(!events.is_empty());
         // Inline code should be present in events
-        assert!(events.len() > 0);
+        assert!(!events.is_empty());
     }
 
     #[test]

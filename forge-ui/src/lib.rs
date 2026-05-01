@@ -1,6 +1,6 @@
 //! # forge-ui
 //!
-//! Leptos CSR (Client-Side Rendering) frontend for Forgedsidian.
+//! Leptos CSR (Client-Side Rendering) frontend for Forgexalith.
 //!
 //! This crate compiles to WASM and is embedded in the Tauri WebView.
 //! All communication with the Rust backend goes through the Tauri IPC

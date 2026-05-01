@@ -40,7 +40,7 @@ pub async fn read_file(path: String, state: State<'_, ForgeState>) -> Result<Str
     // Read file content (limit to 5MB to prevent loading huge binaries).
     let metadata = tokio::fs::metadata(&canonical)
         .await
-        .map_err(|e| format!("failed to read file metadata: {}", e))?;
+        .map_err(|e| format!("failed to read file metadata: {e}"))?;
 
     const MAX_FILE_SIZE: u64 = 5 * 1024 * 1024;
     if metadata.len() > MAX_FILE_SIZE {
@@ -53,7 +53,7 @@ pub async fn read_file(path: String, state: State<'_, ForgeState>) -> Result<Str
 
     let content = tokio::fs::read_to_string(&canonical)
         .await
-        .map_err(|e| format!("failed to read file (may be binary): {}", e))?;
+        .map_err(|e| format!("failed to read file (may be binary): {e}"))?;
 
     Ok(content)
 }
@@ -91,7 +91,7 @@ pub async fn save_note(
         .parent()
         .ok_or_else(|| "path validation failed".to_string())?;
     let parent_canonical =
-        dunce::canonicalize(&parent).map_err(|_| "path validation failed".to_string())?;
+        dunce::canonicalize(parent).map_err(|_| "path validation failed".to_string())?;
     let vault_canonical =
         dunce::canonicalize(&vault_path).map_err(|_| "vault path validation failed".to_string())?;
 
@@ -109,7 +109,7 @@ pub async fn save_note(
     // Write to disk immediately — data safety first.
     tokio::fs::write(&file_path, &body)
         .await
-        .map_err(|e| format!("failed to write note: {}", e))?;
+        .map_err(|e| format!("failed to write note: {e}"))?;
 
     tracing::info!(path = %file_path.display(), "note saved to disk");
 

@@ -1,4 +1,4 @@
-# Forgedsidian -- Documentation
+# Forgexalith -- Documentation
 
 This directory hosts the project's developer-facing documentation.
 

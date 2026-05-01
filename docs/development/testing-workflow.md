@@ -1,6 +1,6 @@
 # Testing workflow
 
-This page documents the manual end-to-end test workflow used to validate Forgedsidian before tagging a release. It complements the automated test suite (239 tests at baseline -- see `cargo test --workspace`).
+This page documents the manual end-to-end test workflow used to validate Forgexalith before tagging a release. It complements the automated test suite (239 tests at baseline -- see `cargo test --workspace`).
 
 ## Goal
 

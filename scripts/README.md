@@ -1,14 +1,14 @@
 ---
 tags:
-  - forgedsidian
+  - forgexalith
   - scripts
   - build
 created: 2026-04-15
 ---
 
-# Scripts — Forgedsidian
+# Scripts — Forgexalith
 
-Utility scripts for the Forgedsidian project. Cross-platform Python only
+Utility scripts for the Forgexalith project. Cross-platform Python only
 (Windows / macOS / Linux), matching the `cross-platform` principle of the
 workspace CLAUDE.md ROOT.
 
@@ -20,7 +20,7 @@ single source image, with automatic background removal and centering.
 ### Install dependencies (one-time)
 
 ```powershell
-# From Vault-Pro/Dev/Forgedsidian/
+# From Vault-Pro/Dev/Forgexalith/
 python -m pip install pillow rembg
 ```
 
@@ -30,7 +30,7 @@ First run of the script will also download the `u2net.onnx` model
 ### Usage
 
 ```powershell
-# From Vault-Pro/Dev/Forgedsidian/ (project root)
+# From Vault-Pro/Dev/Forgexalith/ (project root)
 python scripts/prepare_icons.py path/to/your/logo.jpg
 ```
 

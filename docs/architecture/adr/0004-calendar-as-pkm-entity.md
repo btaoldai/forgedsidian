@@ -6,14 +6,14 @@
 
 ## Context
 
-Users of Forgedsidian need time-based organization alongside the note/graph
+Users of Forgexalith need time-based organization alongside the note/graph
 model. Calendar events from external systems (Google, Outlook, Nextcloud)
 distributed as `.ics` files are the lingua franca of temporal data. A tight
 coupling between events and notes enables journaling workflows, meeting-note
 capture, and temporal navigation of the knowledge graph.
 
 Obsidian offers calendar features only via third-party plugins (Calendar,
-Day Planner, Full Calendar). Forgedsidian integrates the concept natively to
+Day Planner, Full Calendar). Forgexalith integrates the concept natively to
 avoid plugin fragmentation and to leverage the Rust + Tauri stack for
 reliability (timezone handling, RRULE expansion, file I/O).
 

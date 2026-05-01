@@ -23,7 +23,7 @@ pub async fn create_note(
     let file_name = if name.ends_with(".md") {
         name.clone()
     } else {
-        format!("{}.md", name)
+        format!("{name}.md")
     };
 
     let rel_path = if folder.is_empty() {
@@ -44,12 +44,12 @@ pub async fn create_note(
     // Canonicalize the vault root (must exist, since vault is open).
     // This is the "ground truth" for the path-traversal check below.
     let canonical_vault = dunce::canonicalize(&vault_path)
-        .map_err(|e| format!("vault canonicalization failed: {}", e))?;
+        .map_err(|e| format!("vault canonicalization failed: {e}"))?;
 
     let file_path = vault_path.join(&rel_path);
 
     if file_path.exists() {
-        return Err(format!("note already exists: {}", rel_path));
+        return Err(format!("note already exists: {rel_path}"));
     }
 
     // Create parent directories if they don't exist yet. We do this BEFORE
@@ -60,14 +60,14 @@ pub async fn create_note(
         .to_path_buf();
     tokio::fs::create_dir_all(&parent)
         .await
-        .map_err(|e| format!("failed to create directories: {}", e))?;
+        .map_err(|e| format!("failed to create directories: {e}"))?;
 
     // Now the parent exists -> canonicalize it and verify it lives inside
     // the vault. Defense-in-depth: blocks symlink-based escapes that
     // `reject_traversal` cannot detect (a folder argument that is itself a
     // symlink pointing outside the vault).
     let canonical_parent =
-        dunce::canonicalize(&parent).map_err(|e| format!("path canonicalization failed: {}", e))?;
+        dunce::canonicalize(&parent).map_err(|e| format!("path canonicalization failed: {e}"))?;
     if !canonical_parent.starts_with(&canonical_vault) {
         return Err(format!(
             "path traversal rejected: {} is outside vault root",
@@ -80,10 +80,10 @@ pub async fn create_note(
     let safe_file_path = canonical_parent.join(&file_name);
 
     let title = file_name.trim_end_matches(".md");
-    let content = format!("# {}\n\n", title);
+    let content = format!("# {title}\n\n");
     tokio::fs::write(&safe_file_path, &content)
         .await
-        .map_err(|e| format!("failed to create note: {}", e))?;
+        .map_err(|e| format!("failed to create note: {e}"))?;
 
     tracing::info!(path = %safe_file_path.display(), "note created");
 
@@ -136,12 +136,12 @@ pub async fn create_folder(
 
     // Canonicalize the vault root for the path-traversal check below.
     let canonical_vault = dunce::canonicalize(&vault_path)
-        .map_err(|e| format!("vault canonicalization failed: {}", e))?;
+        .map_err(|e| format!("vault canonicalization failed: {e}"))?;
 
     let dir_path = vault_path.join(&rel_path);
 
     if dir_path.exists() {
-        return Err(format!("folder already exists: {}", rel_path));
+        return Err(format!("folder already exists: {rel_path}"));
     }
 
     // Create the folder chain, then canonicalize and verify the result
@@ -150,14 +150,14 @@ pub async fn create_folder(
     // detect this AFTER creation and roll back.
     tokio::fs::create_dir_all(&dir_path)
         .await
-        .map_err(|e| format!("failed to create folder: {}", e))?;
+        .map_err(|e| format!("failed to create folder: {e}"))?;
 
     let canonical_dir = match dunce::canonicalize(&dir_path) {
         Ok(p) => p,
         Err(e) => {
             // Roll back the partial creation (best-effort).
             let _ = tokio::fs::remove_dir_all(&dir_path).await;
-            return Err(format!("path canonicalization failed: {}", e));
+            return Err(format!("path canonicalization failed: {e}"));
         }
     };
     if !canonical_dir.starts_with(&canonical_vault) {

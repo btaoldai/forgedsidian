@@ -1,4 +1,4 @@
-//! Spatial outliner canvas pour Forgedsidian — Phase 22 / 22b / 22c.
+//! Spatial outliner canvas pour Forgexalith — Phase 22 / 22b / 22c.
 //!
 //! **Phase 22** : canvas DOM-CSS infini — cartes notes, pan/zoom/drag.
 //! **Phase 22b** : couche de dessin minimaliste — Pen, Line, Rect, Circle,
@@ -85,7 +85,7 @@ fn default_opacity() -> f64 { 1.0 }
 /// Élément de dessin finalisé, stocké en coordonnées canvas.
 ///
 /// Serde-enabled for persistence: canvas drawings are saved as JSON
-/// alongside the vault in `.forgedsidian/canvas-drawings.json`.
+/// alongside the vault in `.forgexalith/canvas-drawings.json`.
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 enum DrawEl {
@@ -512,7 +512,7 @@ pub fn CanvasView() -> impl IntoView {
     // ── Effect: chargement des dessins persistés ──────────────────────────
     //
     // Au montage du composant (premier tick), charge les dessins depuis
-    // `.forgedsidian/canvas-drawings.json` via IPC. Si le fichier n'existe
+    // `.forgexalith/canvas-drawings.json` via IPC. Si le fichier n'existe
     // pas (null), draw_elements reste vide.
     {
         let load_once = RwSignal::new(false);

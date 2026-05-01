@@ -1,6 +1,6 @@
 # Security Policy
 
-Thank you for taking the time to help keep Forgedsidian and its users safe.
+Thank you for taking the time to help keep Forgexalith and its users safe.
 
 ## Reporting an issue
 
@@ -8,7 +8,7 @@ Thank you for taking the time to help keep Forgedsidian and its users safe.
 
 Please use the **GitHub private advisory** channel:
 
-https://github.com/btaoldai/forgedsidian/security/advisories/new
+https://github.com/btaoldai/forgexalith/security/advisories/new
 
 This is the only supported reporting channel for security-sensitive issues. It guarantees confidentiality, is integrated with GitHub's CVE assignment workflow, and gives both reporter and maintainer an audit trail.
 
@@ -24,7 +24,7 @@ When reporting, please include:
 
 ## Supported versions
 
-Forgedsidian is in early-alpha. Only the latest commit on `main` is actively maintained. Pre-tag development snapshots are not supported.
+Forgexalith is in early-alpha. Only the latest commit on `main` is actively maintained. Pre-tag development snapshots are not supported.
 
 | Version | Supported |
 |---|---|
@@ -46,7 +46,7 @@ These timelines may slip for complex issues; if so, the reporter will be kept in
 
 ## Threat model
 
-Forgedsidian is a local-first desktop application. It does not include a server, no telemetry, and the application itself does not make outbound network calls (dependencies may fetch updates -- see SBOM in `docs/audits/`).
+Forgexalith is a local-first desktop application. It does not include a server, no telemetry, and the application itself does not make outbound network calls (dependencies may fetch updates -- see SBOM in `docs/audits/`).
 
 The threat model focuses on:
 
@@ -56,7 +56,7 @@ The threat model focuses on:
 
 Out of scope (for now, unless explicitly added later):
 
-- Network-based attacks (Forgedsidian is not a server).
+- Network-based attacks (Forgexalith is not a server).
 - Multi-user / shared-machine scenarios (the documentation states the application is intended for single-user local use).
 - Side-channel attacks on the underlying OS.
 
@@ -75,4 +75,4 @@ A list of researchers and contributors who have responsibly reported issues will
 
 ## Notes on the AS-IS clause
 
-Forgedsidian is provided AS IS, under the MIT License (see [LICENSE](LICENSE) and the Disclaimer in [README.md](README.md)). The maintainer makes no warranty of fitness for any particular purpose, including security-critical use. Reporting issues helps improve the project for everyone but does not create any obligation of support or fitness.
+Forgexalith is provided AS IS, under the MIT License (see [LICENSE](LICENSE) and the Disclaimer in [README.md](README.md)). The maintainer makes no warranty of fitness for any particular purpose, including security-critical use. Reporting issues helps improve the project for everyone but does not create any obligation of support or fitness.

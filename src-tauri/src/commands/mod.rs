@@ -91,7 +91,7 @@ impl ForgeState {
 pub fn validate_vault_path(path_str: &str) -> Result<PathBuf, String> {
     const MAX_PATH_LEN: usize = 1024;
     if path_str.len() > MAX_PATH_LEN {
-        return Err(format!("path too long (max {} chars)", MAX_PATH_LEN));
+        return Err(format!("path too long (max {MAX_PATH_LEN} chars)"));
     }
 
     let path = PathBuf::from(path_str);
@@ -109,7 +109,7 @@ pub fn validate_vault_path(path_str: &str) -> Result<PathBuf, String> {
     }
 
     let canonical =
-        dunce::canonicalize(&path).map_err(|e| format!("failed to canonicalize path: {}", e))?;
+        dunce::canonicalize(&path).map_err(|e| format!("failed to canonicalize path: {e}"))?;
 
     if !canonical.is_dir() {
         return Err(format!(

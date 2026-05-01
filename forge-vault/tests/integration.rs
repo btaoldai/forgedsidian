@@ -15,7 +15,7 @@ use tempfile::TempDir;
 
 /// Create a .md file in a directory with the given content.
 fn create_note(dir: &Path, name: &str, content: &str) {
-    let path = dir.join(format!("{}.md", name));
+    let path = dir.join(format!("{name}.md"));
     fs::write(&path, content).expect("failed to write note");
 }
 
@@ -507,7 +507,7 @@ fn test_list_tags_from_notes() {
     let tags = store.list_tags();
 
     // Should contain exactly the 4 unique tags, sorted alphabetically.
-    assert_eq!(tags.len(), 4, "expected 4 distinct tags, got: {:?}", tags);
+    assert_eq!(tags.len(), 4, "expected 4 distinct tags, got: {tags:?}");
     assert_eq!(tags, vec!["devops", "docker", "rust", "testing"]);
 }
 
@@ -535,8 +535,7 @@ fn test_notes_by_tag() {
     assert_eq!(rust_notes.len(), 1, "expected exactly 1 note tagged 'rust'");
     assert!(
         rust_notes[0].to_string_lossy().contains(rust_note_name),
-        "expected rust_note to be in notes_by_tag('rust'), got: {:?}",
-        rust_notes
+        "expected rust_note to be in notes_by_tag('rust'), got: {rust_notes:?}"
     );
 
     let python_notes = store.notes_by_tag("python");
@@ -756,8 +755,7 @@ fn test_large_note_file() {
     // Verify the large file didn't cause a panic or excessive delay (< 30 seconds).
     assert!(
         elapsed.as_secs() < 30,
-        "vault opening took too long with large file: {:?}",
-        elapsed
+        "vault opening took too long with large file: {elapsed:?}"
     );
 }
 

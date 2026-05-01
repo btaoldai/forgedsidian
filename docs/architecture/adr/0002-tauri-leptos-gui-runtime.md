@@ -5,7 +5,7 @@
 
 ## Context
 
-Forgedsidian requires a modern desktop application framework that supports:
+Forgexalith requires a modern desktop application framework that supports:
 1. Cross-platform native windows (Windows, macOS, Linux)
 2. Rich interactive UI (canvas, graph visualization, editor)
 3. Deep integration with a Rust backend (storage, indexing, graph algorithms)

@@ -251,7 +251,7 @@ impl VaultStore {
                 emit(
                     4,
                     "Indexing...",
-                    Some(format!("Incremental: {} files", changed)),
+                    Some(format!("Incremental: {changed} files")),
                 );
                 // Incremental: handle added + modified + deleted.
                 indexing::apply_diff(&index, &mut manifest, &diff, extractor)?;
@@ -611,7 +611,7 @@ impl VaultStore {
                     .map(|p| p.to_string_lossy().to_lowercase().replace('\\', "/"))
                     .unwrap_or_default();
                 // Match with or without .md extension
-                if rel == normalised || rel == format!("{}.md", normalised) {
+                if rel == normalised || rel == format!("{normalised}.md") {
                     return Some(path_str.clone());
                 }
             }

@@ -45,7 +45,7 @@ fn parse_yaml_list(yaml: &str, key: &str) -> Vec<String> {
     // Search for the key line: `key: ...`
     for line in yaml.lines() {
         let trimmed = line.trim_start();
-        if trimmed.starts_with(&format!("{}:", key)) {
+        if trimmed.starts_with(&format!("{key}:")) {
             // Extract what comes after `key:`
             let after_colon = &trimmed[key.len() + 1..].trim_start();
 
@@ -73,7 +73,7 @@ fn parse_yaml_list(yaml: &str, key: &str) -> Vec<String> {
                 let mut found_key = false;
                 for block_line in yaml.lines() {
                     let block_trimmed = block_line.trim_start();
-                    if block_trimmed.starts_with(&format!("{}:", key)) {
+                    if block_trimmed.starts_with(&format!("{key}:")) {
                         found_key = true;
                         continue;
                     }
@@ -131,7 +131,7 @@ fn parse_yaml_list(yaml: &str, key: &str) -> Vec<String> {
 fn parse_yaml_scalar(yaml: &str, key: &str) -> Option<String> {
     for line in yaml.lines() {
         let trimmed = line.trim_start();
-        if trimmed.starts_with(&format!("{}:", key)) {
+        if trimmed.starts_with(&format!("{key}:")) {
             let after_colon = &trimmed[key.len() + 1..].trim_start();
             if after_colon.is_empty() {
                 return None;
@@ -239,7 +239,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -253,7 +253,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -267,7 +267,7 @@ mod tests {
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -284,7 +284,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -298,7 +298,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -322,7 +322,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["rust", "testing", "obsidian"]
+            ["rust", "testing", "obsidian"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -342,7 +342,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.tags,
-            vec!["my tag", "another tag", "spaced-tag"]
+            ["my tag", "another tag", "spaced-tag"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -358,7 +358,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.aliases,
-            vec!["alt1", "alt2", "alt3"]
+            ["alt1", "alt2", "alt3"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
@@ -372,7 +372,7 @@ Body"#;
         let fm = parse_frontmatter(raw);
         assert_eq!(
             fm.aliases,
-            vec!["alias1", "alias2"]
+            ["alias1", "alias2"]
                 .iter()
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()

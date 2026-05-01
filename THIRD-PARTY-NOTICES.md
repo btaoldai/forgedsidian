@@ -1,7 +1,7 @@
-# Third-Party Notices -- Forgedsidian
+# Third-Party Notices -- Forgexalith
 
 This file documents third-party assets and notable dependencies used in
-Forgedsidian, along with their respective licences.
+Forgexalith, along with their respective licences.
 
 Last updated: 2026-04-17
 

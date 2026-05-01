@@ -1,4 +1,4 @@
-# Licence Audit Report -- Forgedsidian
+# Licence Audit Report -- Forgexalith
 
 Date: 2026-04-17
 Tools: cargo-deny 0.19.4 + cargo-audit 0.22.1 + cargo-sbom 0.10.0
@@ -29,7 +29,7 @@ PASS -- all licences are in the allow-list defined in `deny.toml`.
 | paste | unmaintained | RUSTSEC-2024-0436 | Transitive dependency (wgpu / metal). Alternative: pastey. |
 | proc-macro-error | unmaintained | RUSTSEC-2024-0370 | Transitive dependency. |
 | unic-char-property, unic-char-range, unic-common, unic-ucd-ident, unic-ucd-version | unmaintained | RUSTSEC-2025-0075..0100 | Transitive dependency (urlpattern -> tauri-utils). |
-| rand 0.7.3, rand 0.8.5 | unsound | RUSTSEC-2026-0097 | Unsound when a custom logger uses `rand::rng()`. Low risk (no custom logger in Forgedsidian). |
+| rand 0.7.3, rand 0.8.5 | unsound | RUSTSEC-2026-0097 | Unsound when a custom logger uses `rand::rng()`. Low risk (no custom logger in Forgexalith). |
 | glib 0.18.5 | unsound | RUSTSEC-2024-0429 | `VariantStrIter` unsoundness. Transitive GTK3 dependency. |
 | lru 0.12.5 | unsound | RUSTSEC-2026-0002 | `IterMut` Stacked Borrows violation. Transitive dependency (tantivy cache). |
 
@@ -108,7 +108,7 @@ No third-party CDN script or stylesheet detected in `index.html` (apart from Goo
 | `search_notes` | No (query string) | N/A | Query the index |
 | `get_graph_snapshot` | No | N/A | -- |
 | `resolve_wikilink` | No (wikilink string) | N/A | -- |
-| `save_canvas_drawings` | No | N/A | Fixed path `.forgedsidian/canvas-drawings.json` |
+| `save_canvas_drawings` | No | N/A | Fixed path `.forgexalith/canvas-drawings.json` |
 | `load_canvas_drawings` | No | N/A | Same |
 | `get_canvas` | No | N/A | -- |
 
