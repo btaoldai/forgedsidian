@@ -1,6 +1,6 @@
 # forge-ui
 
-Leptos CSR frontend for Forgedsidian.
+Leptos CSR frontend for Forgexalith.
 
 ## Purpose
 

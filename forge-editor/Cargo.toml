@@ -1,6 +1,6 @@
 [package]
 name        = "forge-editor"
-description = "Markdown AST, inline editing logic and YAML frontmatter parsing for Forgedsidian."
+description = "Markdown AST, inline editing logic and YAML frontmatter parsing for Forgexalith."
 version.workspace    = true
 edition.workspace    = true
 authors.workspace    = true

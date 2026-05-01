@@ -4,9 +4,9 @@
 
 ## Why this page exists
 
-Forgedsidian is built by a single maintainer using an AI-assisted workflow as a core part of the process. This page documents that workflow at a level of detail useful to two audiences:
+Forgexalith is built by a single maintainer using an AI-assisted workflow as a core part of the process. This page documents that workflow at a level of detail useful to two audiences:
 
-1. **Contributors to Forgedsidian** -- so you can decode what you see in commit messages, PR descriptions, and references to internal artifacts (`00-control-center/`, `.claude/logs/`, "Phase 22b", etc.).
+1. **Contributors to Forgexalith** -- so you can decode what you see in commit messages, PR descriptions, and references to internal artifacts (`00-control-center/`, `.claude/logs/`, "Phase 22b", etc.).
 2. **Developers who want to apply the same pattern** to their own projects.
 
 The full methodology, the orchestration system, the skills, and the routing rules are open-sourced separately in:
@@ -73,15 +73,15 @@ This file is loaded automatically by every Claude session, so the conventions ne
 
 ### 2. Project-level rules (`forge-pkm/CLAUDE.md` in the maintainer's vault)
 
-Per-project overrides and additions. For Forgedsidian:
+Per-project overrides and additions. For Forgexalith:
 
 - Locked sections (LOCK) where AI cannot change anything without explicit human approval.
 - Sub-agent briefing doctrine -- lessons learned across multiple "waves" of refactoring (e.g. always provide exact API signatures when delegating test-writing to a sub-agent, or it will invent plausible-but-wrong types).
-- Mini-swarm interface for parent orchestrators (so cross-project orchestration sees Forgedsidian's status from a known set of files).
+- Mini-swarm interface for parent orchestrators (so cross-project orchestration sees Forgexalith's status from a known set of files).
 
 ### 3. Skill-level rules (loaded from `~/.claude/skills/`)
 
-Specialized "skills" loaded based on the task at hand. The most relevant ones for Forgedsidian:
+Specialized "skills" loaded based on the task at hand. The most relevant ones for Forgexalith:
 
 - `baptiste-code-style` -- doctrine for all Rust / Python code (documentation-first, zero-trust, modular, resilient).
 - `rust-expert` -- advanced Rust patterns (async/tokio, error handling, lifetimes, workspaces, macros, performance).
@@ -128,4 +128,4 @@ If you want to understand or apply this pattern :
 
 ## Feedback
 
-This is a relatively new way of working in the open. If you have observations, criticisms, or improvements, please open a [Discussion](https://github.com/btaoldai/forgedsidian/discussions) -- the methodology evolves through public iteration.
+This is a relatively new way of working in the open. If you have observations, criticisms, or improvements, please open a [Discussion](https://github.com/btaoldai/forgexalith/discussions) -- the methodology evolves through public iteration.

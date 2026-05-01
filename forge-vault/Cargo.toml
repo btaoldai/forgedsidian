@@ -1,6 +1,6 @@
 [package]
 name        = "forge-vault"
-description = "Note storage, full-text index (Tantivy) and metadata search for Forgedsidian."
+description = "Note storage, full-text index (Tantivy) and metadata search for Forgexalith."
 version.workspace    = true
 edition.workspace    = true
 authors.workspace    = true

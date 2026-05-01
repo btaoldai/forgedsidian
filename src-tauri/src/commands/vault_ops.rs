@@ -390,7 +390,7 @@ pub async fn get_canvas(state: State<'_, ForgeState>) -> Result<serde_json::Valu
     serde_json::to_value(&*canvas).map_err(|e| e.to_string())
 }
 
-/// Save canvas drawing elements to `.forgedsidian/canvas-drawings.json`
+/// Save canvas drawing elements to `.forgexalith/canvas-drawings.json`
 /// inside the vault directory.
 ///
 /// The payload is a raw JSON value (array of drawing elements serialised
@@ -403,9 +403,9 @@ pub async fn save_canvas_drawings(
 ) -> Result<(), String> {
     let vault_path = state.vault_path.lock().await;
     let vault = vault_path.as_ref().ok_or("no vault open")?;
-    let dir = vault.join(".forgedsidian");
+    let dir = vault.join(".forgexalith");
     std::fs::create_dir_all(&dir)
-        .map_err(|e| format!("failed to create .forgedsidian dir: {e}"))?;
+        .map_err(|e| format!("failed to create .forgexalith dir: {e}"))?;
     let file = dir.join("canvas-drawings.json");
     let json =
         serde_json::to_string_pretty(&drawings).map_err(|e| format!("serialization error: {e}"))?;
@@ -414,7 +414,7 @@ pub async fn save_canvas_drawings(
     Ok(())
 }
 
-/// Load canvas drawing elements from `.forgedsidian/canvas-drawings.json`.
+/// Load canvas drawing elements from `.forgexalith/canvas-drawings.json`.
 ///
 /// Returns `null` if the file does not exist (first use, no drawings yet).
 #[tauri::command]
@@ -423,7 +423,7 @@ pub async fn load_canvas_drawings(
 ) -> Result<serde_json::Value, String> {
     let vault_path = state.vault_path.lock().await;
     let vault = vault_path.as_ref().ok_or("no vault open")?;
-    let file = vault.join(".forgedsidian").join("canvas-drawings.json");
+    let file = vault.join(".forgexalith").join("canvas-drawings.json");
     if !file.exists() {
         return Ok(serde_json::Value::Null);
     }

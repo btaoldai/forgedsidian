@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        For open-ended questions, **please use [Discussions](https://github.com/btaoldai/forgedsidian/discussions)** -- they are a better fit and stay searchable for other users with the same question.
+        For open-ended questions, **please use [Discussions](https://github.com/btaoldai/forgexalith/discussions)** -- they are a better fit and stay searchable for other users with the same question.
 
         Use this issue type only when the question is actionable (something the maintainer should do or document, e.g. "the README does not explain how X works -- could you clarify?").
 

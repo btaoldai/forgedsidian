@@ -1,6 +1,6 @@
-# AI Contributors -- Forgedsidian
+# AI Contributors -- Forgexalith
 
-> Forgedsidian is built with AI-assisted development as a **core, transparent part** of the workflow.
+> Forgexalith is built with AI-assisted development as a **core, transparent part** of the workflow.
 > This document explains the role of each assistant, what they did, and how their contributions are tracked.
 >
 > **The methodology behind this is itself open-source** in a companion repo:
@@ -18,7 +18,7 @@ This document is **not** an attempt to make any AI a co-author in the legal sens
 
 ## The two-repo story
 
-| | Forgedsidian (this repo) | claude-root-orchestrator |
+| | Forgexalith (this repo) | claude-root-orchestrator |
 |---|---|---|
 | **What** | The product | The factory |
 | **Output** | A Rust PKM you can clone, build, use today | The methodology, skills, routing rules, CLAUDE.md hierarchy |
@@ -81,7 +81,7 @@ Closes #XX
 Co-authored-by: Claude (Anthropic) <noreply@anthropic.com>
 ```
 
-This trailer convention is adopted by GitHub, the Linux kernel, and many large open-source projects when there is a non-author contributor whose work is reflected in the diff. Forgedsidian keeps its use **optional per-commit** -- because the global picture is already documented here -- without excluding it.
+This trailer convention is adopted by GitHub, the Linux kernel, and many large open-source projects when there is a non-author contributor whose work is reflected in the diff. Forgexalith keeps its use **optional per-commit** -- because the global picture is already documented here -- without excluding it.
 
 ### In ADRs
 
@@ -112,12 +112,12 @@ AI assistants in this project **do not have repository write access**. They cann
 
 Large language models like Claude are trained on a broad corpus that includes public source code (open-source repositories, books, documentation, websites). Anthropic applies filtering and refusal mechanisms to limit verbatim reproduction of copyrighted code, but **no filter is perfect**.
 
-For Forgedsidian, this means:
+For Forgexalith, this means:
 
 - **Best-effort, not guaranteed**: the maintainer has reviewed the codebase for explicit markers (third-party copyrights, attribution comments, references to specific reference projects). The pre-publication audit found no such markers (see commit history). However, **we cannot guarantee with 100% certainty** that no AI-generated block of code resembles, in some part, code seen during training.
 - **Idiomatic vs verbatim**: most of the code is idiomatic Rust using public APIs (Tantivy, Tauri, Leptos, petgraph, wgpu) and well-known algorithms (Fruchterman-Reingold, HMAC-SHA256, Tantivy querying). Idiomatic patterns are not, in themselves, copyright violations.
 - **Inspiration vs copy**: where the design is inspired by other projects (e.g. Obsidian's organic graph layout), this is acknowledged in the relevant source comment. Inspiration of behaviour or aesthetics is not the same as code reproduction.
-- **Fix-on-notice policy**: if you recognize a substantial portion of your own copyrighted code in this repository, please [open a security advisory](https://github.com/btaoldai/forgedsidian/security/advisories/new) or email the maintainer (see [SECURITY.md](SECURITY.md)). The maintainer will investigate and, if confirmed, attribute, rewrite, or remove the affected code.
+- **Fix-on-notice policy**: if you recognize a substantial portion of your own copyrighted code in this repository, please [open a security advisory](https://github.com/btaoldai/forgexalith/security/advisories/new) or email the maintainer (see [SECURITY.md](SECURITY.md)). The maintainer will investigate and, if confirmed, attribute, rewrite, or remove the affected code.
 
 This disclosure follows the practice adopted by many AI-assisted open-source projects (GitHub Copilot users, Cursor users, etc.). It is not legal advice; it is an honest description of the process.
 

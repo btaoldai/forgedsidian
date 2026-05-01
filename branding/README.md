@@ -1,13 +1,13 @@
 ---
 tags:
-  - forgedsidian
+  - forgexalith
   - branding
 created: 2026-04-15
 ---
 
-# _branding — Forgedsidian
+# _branding — Forgexalith
 
-Brand assets of the Forgedsidian project : logo sources, mood references,
+Brand assets of the Forgexalith project : logo sources, mood references,
 exports for publication. Everything needed to regenerate app icons,
 splash screens, GitHub banners, and other visual material from a single
 source of truth.
@@ -39,7 +39,7 @@ It is regenerated on demand, so it does not need to be versioned.
 1. Drop the master in `source/` (e.g. `source/logo-flat-source.jpg`).
 2. Run the pipeline :
    ```powershell
-   cd <Forgedsidian root>
+   cd <Forgexalith root>
    python scripts/prepare_icons.py _branding/source/logo-flat-source.jpg
    ```
 3. The icons are written directly into `forge-pkm/src-tauri/icons/`.

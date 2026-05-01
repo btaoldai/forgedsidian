@@ -6,7 +6,7 @@
 use crate::app::AppOptions;
 use leptos::prelude::*;
 
-const STORAGE_KEY: &str = "forgedsidian_settings";
+const STORAGE_KEY: &str = "forgexalith_settings";
 
 /// JSON-serializable snapshot of the settings we persist.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -1,7 +1,7 @@
 {
-  "productName": "Forgedsidian",
+  "productName": "Forgexalith",
   "version": "0.1.0",
-  "identifier": "com.therustlab.forgedsidian",
+  "identifier": "com.therustlab.forgexalith",
   "build": {
     "beforeDevCommand": "trunk serve --port 1420",
     "devUrl": "http://localhost:1420",
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "Forgedsidian",
+        "title": "Forgexalith",
         "width": 1280,
         "height": 800,
         "resizable": true,
@@ -35,6 +35,6 @@
     "resources": [],
     "category": "Productivity",
     "shortDescription": "Rust-based PKM engine — Obsidian alternative",
-    "longDescription": "Forgedsidian is a full Personal Knowledge Management engine written in Rust. Standalone desktop app with notes, backlinks, graph view, wikilinks, and full-text search."
+    "longDescription": "Forgexalith is a full Personal Knowledge Management engine written in Rust. Standalone desktop app with notes, backlinks, graph view, wikilinks, and full-text search."
   }
 }

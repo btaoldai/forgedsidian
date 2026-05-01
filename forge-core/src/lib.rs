@@ -1,6 +1,6 @@
 //! # forge-core
 //!
-//! Shared foundation for the Forgedsidian PKM engine.
+//! Shared foundation for the Forgexalith PKM engine.
 //!
 //! This crate defines the **stable public types** that all other forge-* crates
 //! depend on.  Nothing in this crate should import from sibling crates — it is

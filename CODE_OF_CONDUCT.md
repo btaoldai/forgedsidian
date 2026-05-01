@@ -23,7 +23,7 @@ We pledge to make participation in our community a harassment-free experience fo
 Instances of unacceptable behavior may be reported to the project maintainer through one of the following channels:
 
 1. **GitHub private advisory** (recommended for any sensitive matter)
-   https://github.com/btaoldai/forgedsidian/security/advisories/new
+   https://github.com/btaoldai/forgexalith/security/advisories/new
 
 2. **GitHub** -- open a private channel by mentioning [@btaoldai](https://github.com/btaoldai) in a context where direct messaging is appropriate, or use the project's discussions for non-sensitive matters.
 

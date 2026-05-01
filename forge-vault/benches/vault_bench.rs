@@ -34,7 +34,7 @@ fn create_test_vault(n: usize) -> (TempDir, PathBuf) {
             ));
         }
         // Add some searchable content for search benchmarks.
-        body.push_str("Keywords: rust tauri leptos wasm forgedsidian vault search index.\n");
+        body.push_str("Keywords: rust tauri leptos wasm forgexalith vault search index.\n");
         if i % 5 == 0 {
             body.push_str("Special topic: cybersecurity zero-trust architecture.\n");
         }
@@ -110,7 +110,7 @@ fn bench_search(c: &mut Criterion) {
     let (_dir, root) = create_test_vault(500);
     let store = VaultStore::open(&root).expect("open vault");
 
-    for query in &["rust", "cybersecurity", "note-0042", "wasm forgedsidian"] {
+    for query in &["rust", "cybersecurity", "note-0042", "wasm forgexalith"] {
         group.bench_with_input(BenchmarkId::from_parameter(query), query, |b, q| {
             b.iter(|| {
                 let results = store.search_notes(black_box(q), 20).expect("search");

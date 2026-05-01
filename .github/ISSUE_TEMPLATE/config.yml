@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Discussion / Q&A
-    url: https://github.com/btaoldai/forgedsidian/discussions
+    url: https://github.com/btaoldai/forgexalith/discussions
     about: For open-ended questions, ideas, and conversation, please use Discussions.
   - name: Security advisory (private)
-    url: https://github.com/btaoldai/forgedsidian/security/advisories/new
+    url: https://github.com/btaoldai/forgexalith/security/advisories/new
     about: Please report security-sensitive findings privately. See SECURITY.md.

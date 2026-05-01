@@ -239,7 +239,7 @@ pub struct AppState {
     pub indexing_detail: RwSignal<String>,
 }
 
-/// Root Leptos component — initializes global state and renders the Forgedsidian UI shell.
+/// Root Leptos component — initializes global state and renders the Forgexalith UI shell.
 ///
 /// This is the entry point of the web UI. Responsibilities:
 /// 1. Create and provide [`AppState`] context (vault path, note list, active view, etc.).
@@ -684,7 +684,7 @@ pub fn App() -> impl IntoView {
                         } else {
                             view! {
                                 <div class="forge-content__placeholder">
-                                    <h2>"Welcome to Forgedsidian"</h2>
+                                    <h2>"Welcome to Forgexalith"</h2>
                                     <p>"A modular knowledge graph platform in Rust."</p>
                                     <button on:click=handle_open_vault class="forge-btn forge-btn--primary">
                                         "Open vault"

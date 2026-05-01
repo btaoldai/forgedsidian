@@ -1,10 +1,10 @@
-# Architecture -- Forgedsidian
+# Architecture -- Forgexalith
 
 > Synthesis document. Detailed Architecture Decision Records (ADRs) and C4 diagrams live in [docs/architecture/](docs/architecture/).
 
 ## TL;DR
 
-Forgedsidian is a single Tauri 2 desktop application backed by a Rust monorepo workspace of 8 crates. The backend (Rust, native) handles vault scanning, full-text indexing (Tantivy), graph data structures (petgraph), file watching, IPC, and security primitives (HMAC manifest, append-only audit log). The frontend (Leptos 0.7 CSR, compiled to WebAssembly) handles all UI. Communication is exclusively through Tauri's IPC layer with hardened path validation.
+Forgexalith is a single Tauri 2 desktop application backed by a Rust monorepo workspace of 8 crates. The backend (Rust, native) handles vault scanning, full-text indexing (Tantivy), graph data structures (petgraph), file watching, IPC, and security primitives (HMAC manifest, append-only audit log). The frontend (Leptos 0.7 CSR, compiled to WebAssembly) handles all UI. Communication is exclusively through Tauri's IPC layer with hardened path validation.
 
 ```
 +---------------------------+        IPC commands         +---------------------------+
@@ -100,7 +100,7 @@ User edits -> Leptos editor -> 500ms debounce
 
 ## Security model
 
-Forgedsidian is local-first; there is no server, no telemetry, no external network call by the app itself (dependencies may fetch updates -- see SBOM). The threat model focuses on local filesystem integrity and WebView-level attack surface.
+Forgexalith is local-first; there is no server, no telemetry, no external network call by the app itself (dependencies may fetch updates -- see SBOM). The threat model focuses on local filesystem integrity and WebView-level attack surface.
 
 | Layer | Hardening |
 |---|---|

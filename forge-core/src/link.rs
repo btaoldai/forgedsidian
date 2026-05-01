@@ -1,4 +1,4 @@
-//! Link types and extraction trait for Forgedsidian.
+//! Link types and extraction trait for Forgexalith.
 //!
 //! Defines the canonical [`Link`] type (wikilinks + hyperlinks) and the
 //! [`WikilinkExtractor`] trait that abstracts extraction logic away from

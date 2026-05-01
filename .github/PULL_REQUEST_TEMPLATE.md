@@ -1,4 +1,4 @@
-<!-- Thank you for contributing to Forgedsidian! -->
+<!-- Thank you for contributing to Forgexalith! -->
 <!-- Please fill in the sections below. Lines starting with `<!--` are comments and won't appear once submitted. -->
 
 ## Summary

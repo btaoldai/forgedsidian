@@ -5,7 +5,7 @@
 
 ## Context
 
-Forgedsidian is a modular personal knowledge management (PKM) system with multiple architectural layers: a storage and indexing backend, a graph computation engine, editing and rendering capabilities, and a Tauri desktop application frontend. Early in the project, a monolithic crate structure became unwieldy and prevented clear separation of concerns and independent testing.
+Forgexalith is a modular personal knowledge management (PKM) system with multiple architectural layers: a storage and indexing backend, a graph computation engine, editing and rendering capabilities, and a Tauri desktop application frontend. Early in the project, a monolithic crate structure became unwieldy and prevented clear separation of concerns and independent testing.
 
 The challenge: how to organize Rust code into crates that respect clean architecture, minimize circular dependencies, and allow parallel development without re-compiling the entire workspace?
 

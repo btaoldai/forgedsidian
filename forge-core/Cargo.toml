@@ -1,6 +1,6 @@
 [package]
 name        = "forge-core"
-description = "Shared types, domain events, stable IDs and format primitives for Forgedsidian."
+description = "Shared types, domain events, stable IDs and format primitives for Forgexalith."
 version.workspace    = true
 edition.workspace    = true
 authors.workspace    = true

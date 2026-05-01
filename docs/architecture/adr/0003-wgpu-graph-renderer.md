@@ -5,7 +5,7 @@
 
 ## Context
 
-Forgedsidian displays knowledge graphs (notes as nodes, wikilinks as edges) in real-time. Early prototypes using SVG + D3 rendered smoothly up to ~200 nodes, but degraded to <30 FPS for 1000+ nodes.
+Forgexalith displays knowledge graphs (notes as nodes, wikilinks as edges) in real-time. Early prototypes using SVG + D3 rendered smoothly up to ~200 nodes, but degraded to <30 FPS for 1000+ nodes.
 
 Three rendering strategies were considered:
 

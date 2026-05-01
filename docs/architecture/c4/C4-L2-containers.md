@@ -7,11 +7,11 @@ updated: 2026-04-11
 
 # C4-L2 — Container Diagram
 
-C4 level 2 diagram: Forgedsidian's internal architecture (containers and relationships).
+C4 level 2 diagram: Forgexalith's internal architecture (containers and relationships).
 
 ## Overview
 
-Forgedsidian is composed of several containers (Rust crates, WASM artefact, Tauri process) that communicate through Tauri IPC and in-process function calls. The system is split into three layers: **Frontend (WASM)**, **IPC Bridge (Tauri)**, and **Backend (native Rust)**.
+Forgexalith is composed of several containers (Rust crates, WASM artefact, Tauri process) that communicate through Tauri IPC and in-process function calls. The system is split into three layers: **Frontend (WASM)**, **IPC Bridge (Tauri)**, and **Backend (native Rust)**.
 
 ```mermaid
 graph TB
@@ -164,7 +164,7 @@ graph TB
 - **Components**:
   - **Link parser**: extract `[[wikilink]]` and `[text](url)`.
   - **MD operations**: insert link, update YAML frontmatter, code block parsing.
-  - **Syntax rules**: Forgedsidian dialect (CommonMark-compatible).
+  - **Syntax rules**: Forgexalith dialect (CommonMark-compatible).
 - **Responsibilities**: AST parsing, link detection, syntax validation, HTML sanitization.
 
 ---
@@ -174,7 +174,7 @@ graph TB
 - **Components**:
   - **Canvas objects**: nodes, edges, text, shapes.
   - **Layout engine**: automatic placement (force-directed or hierarchical).
-  - **Persistence**: canvas serialised to JSON in `.forgedsidian/`.
+  - **Persistence**: canvas serialised to JSON in `.forgexalith/`.
 - **Responsibilities**: canvas state management, layout calculations, undo/redo.
 
 ---
@@ -197,7 +197,7 @@ graph TB
 - **Special files**:
   - `.forgeignore`: exclusion patterns (similar to `.gitignore`).
   - `.forge-index/`: persistent index state (manifest, audit log, Tantivy index).
-  - `.forgedsidian/`: app-local state (canvas drawings, etc.).
+  - `.forgexalith/`: app-local state (canvas drawings, etc.).
 - **Synchronisation**: `VaultWatcher` detects changes and notifies forge-vault.
 
 ---
@@ -265,9 +265,9 @@ graph TB
 - **VaultWatcher**: native OS file watcher, with OS-imposed limits (e.g. inotify on Linux).
 
 ### Risks
-- **FS concurrency**: multiple Forgedsidian instances on the same vault can race; file locks recommended.
+- **FS concurrency**: multiple Forgexalith instances on the same vault can race; file locks recommended.
 - **FS ↔ index sync**: `VaultWatcher` may miss changes after a crash; a periodic full rescan is recommended.
-- **Canvas state corruption**: a corrupted `.forgedsidian/` JSON may lose layout; validation and recovery recommended.
+- **Canvas state corruption**: a corrupted `.forgexalith/` JSON may lose layout; validation and recovery recommended.
 
 ---
 
