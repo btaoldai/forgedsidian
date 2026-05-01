@@ -18,7 +18,7 @@ pub fn split_frontmatter(raw: &str) -> (Option<&str>, &str) {
     }
     // Skip the opening `---\n`
     let after_open = &raw[FRONTMATTER_DELIMITER.len()..];
-    if let Some(close_pos) = after_open.find(&format!("\n{}", FRONTMATTER_DELIMITER)) {
+    if let Some(close_pos) = after_open.find(&format!("\n{FRONTMATTER_DELIMITER}")) {
         let yaml = after_open[..close_pos].trim_start_matches('\n');
         let body_start = close_pos + 1 + FRONTMATTER_DELIMITER.len();
         let body = after_open
