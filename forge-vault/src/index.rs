@@ -177,7 +177,7 @@ impl VaultIndex {
         parser.set_field_boost(self.f_title, 3.0);
 
         let query = parser.parse_query(query_str)?;
-        let top_docs = searcher.search(&query, &TopDocs::with_limit(limit))?;
+        let top_docs = searcher.search(&query, &TopDocs::with_limit(limit).order_by_score())?;
 
         let mut results = Vec::with_capacity(top_docs.len());
         for (_, addr) in top_docs {
