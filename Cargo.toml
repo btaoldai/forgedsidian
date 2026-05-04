@@ -86,4 +86,4 @@ hex         = "0.4"
 # GPU rendering (forge-renderer)
 wgpu        = "27"
 bytemuck    = { version = "1", features = ["derive"] }
-glam        = "0.29"
+glam        = "0.32"
