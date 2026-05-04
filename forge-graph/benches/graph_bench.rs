@@ -14,9 +14,9 @@
 //! without changing call sites. (Picked up incidentally during R4 splash format fix.)
 
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
-use std::hint::black_box;
 use forge_core::NoteId;
 use forge_graph::NoteGraph;
+use std::hint::black_box;
 
 /// Build a graph with `n` nodes and approximately `n * link_ratio` edges.
 fn build_test_graph(n: usize, link_ratio: f64) -> (NoteGraph, Vec<NoteId>) {

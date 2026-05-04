@@ -15,9 +15,9 @@
 //! without changing call sites. (Picked up incidentally during R4 splash format fix.)
 
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
-use std::hint::black_box;
 use forge_vault::VaultStore;
 use std::fs;
+use std::hint::black_box;
 use std::path::PathBuf;
 use tempfile::TempDir;
 
