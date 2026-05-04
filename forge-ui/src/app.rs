@@ -239,6 +239,42 @@ pub struct AppState {
     pub indexing_detail: RwSignal<String>,
 }
 
+/// Formats indexing progress for the splash screen as a single human-readable string.
+///
+/// Returns `"Step X/N - YY%"` when an indexing step is in progress, or an empty string
+/// when no step has started yet (`step == 0` or `total == 0`). This single-string approach
+/// replaces the previous `display:flex; justify-content:space-between` layout (two `<span>`s)
+/// which silently degraded to visual concatenation (`"Step 4/666%"`) when the flex container
+/// failed to take full width — see ANOM-020 / R4 closeout for context.
+///
+/// Pure function: no side effects, deterministic, trivially testable.
+///
+/// # Arguments
+///
+/// * `step`  — current indexing step (1-based, typically `1..=total`).
+/// * `total` — total number of indexing steps (typically 6).
+/// * `pct`   — percent complete, `0..=100`.
+///
+/// # Examples (narrative — see `splash_format_tests` for executable assertions)
+///
+/// - `format_progress(1, 6, 16)` returns `"Step 1/6 - 16%"`.
+/// - `format_progress(6, 6, 100)` returns `"Step 6/6 - 100%"`.
+/// - `format_progress(0, 6, 0)` returns `""` (indexing not started, splash shows spinner instead).
+/// - `format_progress(1, 0, 0)` returns `""` (degenerate state — no indexing plan).
+///
+/// Note: this crate (`forge-ui`) is WASM-only and excluded from the native test workspace,
+/// so the `splash_format_tests` module below is intentionally not exercised by
+/// `cargo test --workspace`. Validation is performed via `cargo tauri dev` smoke test
+/// (visual confirmation of the rendered splash). A future Run can add `wasm-bindgen-test`
+/// configuration if executable assertions are needed in CI.
+pub fn format_progress(step: u8, total: u8, pct: u32) -> String {
+    if step == 0 || total == 0 {
+        String::new()
+    } else {
+        format!("Step {step}/{total} - {pct}%")
+    }
+}
+
 /// Root Leptos component — initializes global state and renders the Forgexalith UI shell.
 ///
 /// This is the entry point of the web UI. Responsibilities:
@@ -643,12 +679,13 @@ pub fn App() -> impl IntoView {
                                                         )
                                                     />
                                                 </div>
-                                                <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                                                // Single centered label: "Step X/N - YY%".
+                                                // Replaces a former `display:flex; justify-content:space-between`
+                                                // layout that silently concatenated to "Step 4/666%" when the flex
+                                                // container failed to take full width (ANOM-020 / R4 closeout).
+                                                <div style="margin-top:6px;text-align:center;">
                                                     <span style="font-size:12px;color:var(--trl-text-tertiary);">
-                                                        {format!("Step {}/{}", step, total)}
-                                                    </span>
-                                                    <span style="font-size:12px;color:var(--trl-text-tertiary);">
-                                                        {format!("{}%", pct)}
+                                                        {format_progress(step, total, pct)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -715,5 +752,63 @@ pub fn App() -> impl IntoView {
                 }
             }}
         </div>
+    }
+}
+
+#[cfg(test)]
+mod splash_format_tests {
+    //! Tests for [`format_progress`] — the splash screen progress label.
+    //!
+    //! Covers the bug surfaced by ANOM-020 (closed in R4): the previous flex-based
+    //! layout silently concatenated `"Step X/N"` and `"YY%"` to `"Step 4/666%"`
+    //! when the inner flex container failed to take full width. Replacing it with
+    //! a single format string eliminates that whole class of layout-dependent bug.
+
+    use super::format_progress;
+
+    #[test]
+    fn formats_progress_with_separator_for_typical_indexing() {
+        assert_eq!(format_progress(1, 6, 16), "Step 1/6 - 16%");
+        assert_eq!(format_progress(3, 6, 50), "Step 3/6 - 50%");
+        assert_eq!(format_progress(4, 6, 66), "Step 4/6 - 66%");
+        assert_eq!(format_progress(6, 6, 100), "Step 6/6 - 100%");
+    }
+
+    #[test]
+    fn returns_empty_string_when_step_is_zero() {
+        // step == 0 means indexing has not started yet — the splash shows the
+        // spinner, not the progress bar (see `show_bar = step > 0` in App()).
+        assert_eq!(format_progress(0, 6, 0), "");
+        assert_eq!(format_progress(0, 0, 0), "");
+    }
+
+    #[test]
+    fn returns_empty_string_when_total_is_zero() {
+        // total == 0 is a degenerate state (no indexing plan provided);
+        // we never want to display the meaningless "Step 1/0".
+        assert_eq!(format_progress(1, 0, 0), "");
+        assert_eq!(format_progress(5, 0, 100), "");
+    }
+
+    #[test]
+    fn never_concatenates_total_and_percent_without_separator() {
+        // Direct regression test for ANOM-020: the bug looked like "Step 4/666%"
+        // which is "Step 4/6" + "66%" concatenated. After fix, the output MUST
+        // contain a clear separator between the step indicator and the percent.
+        let s = format_progress(4, 6, 66);
+        assert!(
+            s.contains(" - "),
+            "expected ' - ' separator in {s:?} (ANOM-020 regression)"
+        );
+        assert_ne!(s, "Step 4/666%", "ANOM-020 regression: concatenation re-introduced");
+    }
+
+    #[test]
+    fn handles_three_digit_percent_without_panicking() {
+        // Defensive: pct is u32, so theoretically it could exceed 100 if the
+        // caller's math overflows. We don't validate the range here; we just
+        // ensure the formatter doesn't panic on edge values.
+        let s = format_progress(1, 6, 999);
+        assert_eq!(s, "Step 1/6 - 999%");
     }
 }

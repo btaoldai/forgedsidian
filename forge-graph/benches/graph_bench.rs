@@ -7,8 +7,14 @@
 //! - Graph snapshot serialisation
 //! - Snapshot JSON serialisation (serde_json)
 //! - remove_note_edges performance
+//!
+//! NOTE: as of criterion 0.8 (Dependabot PR #19, 2026-05-03), `criterion::black_box`
+//! is deprecated in favor of `std::hint::black_box` (stable since Rust 1.66). Switching
+//! the import here keeps `cargo clippy --workspace --all-targets -- -D warnings` green
+//! without changing call sites. (Picked up incidentally during R4 splash format fix.)
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::hint::black_box;
 use forge_core::NoteId;
 use forge_graph::NoteGraph;
 

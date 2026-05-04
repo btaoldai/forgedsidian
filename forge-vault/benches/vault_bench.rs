@@ -8,8 +8,14 @@
 //! - Graph snapshot serialisation
 //! - Scan + diff (incremental detection)
 //! - Link extraction throughput
+//!
+//! NOTE: as of criterion 0.8 (Dependabot PR #19, 2026-05-03), `criterion::black_box`
+//! is deprecated in favor of `std::hint::black_box` (stable since Rust 1.66). Switching
+//! the import here keeps `cargo clippy --workspace --all-targets -- -D warnings` green
+//! without changing call sites. (Picked up incidentally during R4 splash format fix.)
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::hint::black_box;
 use forge_vault::VaultStore;
 use std::fs;
 use std::path::PathBuf;
