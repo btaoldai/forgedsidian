@@ -8,7 +8,23 @@ For per-crate changelogs, see each crate directory: `forge-core/CHANGELOG.md`, `
 
 ## [Unreleased]
 
-(empty -- next changes go here)
+### Fixed
+
+- **Splash progress label** -- Loading splash now displays indexing progress as `"Step X/N - YY%"` (single centered label) instead of the visually concatenated `"Step 4/666%"` produced by the previous flex layout. Root cause: a `<div class="forge-progress" style="width:320px">` nested inside an `align-items:center` flex parent shrunk to content width instead of honoring its declared `width:320px`, which collapsed the inner `display:flex; justify-content:space-between` container -- with no horizontal space left to distribute, the two `<span>` children rendered adjacent. Fix replaces the two-span flex layout with a single centered `<span>` containing the unified format. Resolves ANOM-020 (R4). (#PR-TBD)
+- **`criterion::black_box` deprecation in benches (incidental)** -- After Dependabot bump #19 (`criterion 0.5.1 → 0.8.2`), `criterion::black_box` is deprecated in favor of `std::hint::black_box` (stable since Rust 1.66). Surfaced when running `cargo clippy --workspace --all-targets -- -D warnings` locally; the CI workflow `ci.yml` currently runs clippy WITHOUT `-D warnings`, so the deprecation slipped through #19 review. Switched the import in `forge-graph/benches/graph_bench.rs` and `forge-vault/benches/vault_bench.rs` to `use std::hint::black_box;`; the four call sites in each file are unchanged. Restores `cargo clippy --workspace --all-targets -- -D warnings` to a clean baseline. (#PR-TBD)
+
+### Added
+
+- `pub fn format_progress(step: u8, total: u8, pct: u32) -> String` in `forge-ui/src/app.rs` -- pure helper used by the splash screen, returns `"Step X/N - YY%"` or empty string on degenerate inputs (`step == 0` or `total == 0`). Documented + 5 unit tests in `mod splash_format_tests` (typical inputs / step zero / total zero / regression assertion against ANOM-020 separator presence / 3-digit percent edge case). NOTE: `forge-ui` is WASM-only (excluded from the native test workspace, cf. `lib.rs:11`); these tests are not exercised by `cargo test --workspace` and require a future `wasm-bindgen-test` setup to run in CI. Validation here was done via `cargo tauri dev` smoke test.
+
+### Closed (no code change in this release)
+
+- ANOM-017 (CI workflows missing `pull_request` trigger) -- already resolved silently in the v0.2.0-alpha squash merge `e2de989` (R7 closeout 2026-05-03 done-by-prior-fix). Workflows `audit.yml` and `ci.yml` already contain `pull_request: branches: [main]` on `origin/main`. The PR for this release serves as the operational in-vivo validation that GitHub Required status checks now report on PRs.
+- ANOM-018 (vault name supposedly hardcoded in header) -- false positive of the 2026-05-01 visual audit (R2 closeout 2026-05-03 done-false-positive). The code in `forge-ui/src/components/toolbar.rs` already reads `state.vault_path` dynamically via `file_name_from_path()` (`forge-ui/src/components/folder_tree.rs`). The audit had observed the literal string "Forgedsidian" in the header and interpreted it as a hardcode, but it was the actual folder name of the vault under test (a vault stored at `Vault-Pro/Dev/Forgedsidian/` in the developer's local filesystem -- a separate planned rename, out of scope for this release).
+
+### Internal
+
+- Sprint UI/UX Audit Post-v0.2.0-alpha started 2026-05-03 (`00-control-center/Roadmap-ready-run/` in the developer vault, not shipped). 7 Runs scaffolded (R1-R7), this release closes 3: R7 done-by-prior-fix (no-op), R2 done-false-positive (no-op), R4 done (the only code change in this release).
 
 ## [0.2.0-alpha] - 2026-05-01
 
